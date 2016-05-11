@@ -11,6 +11,7 @@
 matrix::matrix() {
    w=0;
    h=0;
+   data=0;
 }
 
 matrix::~matrix() {
