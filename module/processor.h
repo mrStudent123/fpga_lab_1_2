@@ -28,7 +28,7 @@ SC_MODULE(processor) {
    void do_stuff(){
       printf("load");
 
-      if(input.num_available() <= 0){
+      if(input->num_available() <= 0){
          return;
       }
 
