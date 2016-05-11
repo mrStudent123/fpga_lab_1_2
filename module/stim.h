@@ -6,32 +6,51 @@
 #include <math.h>
 #include "../src/matrix.h"
 
-//#define number_testmatrix 100
-//#define number_outputmatrix number_testmatrix/2
+#define number_testmatrix 100
+#define number_outputmatrix number_testmatrix/2
 
-matrix input_array(2,2),[4];
-matrix output_array[50](2,2);
-int a[5];
+matrix input_array[number_testmatrix];
+matrix output_array[number_outputmatrix];
 
 SC_MODULE(stim) {
 
-   SC_CTOR(stim) {
-      //for(int i = 0; i < 100; i++){
-         //input_array[i]
-      //}
+   sc_port< sc_fifo_out_if<matrix> > data_out;
+   sc_port< sc_fifo_in_if<matrix> > data_in;
+   int j;
 
-      SC_THREAD(go);
+   SC_CTOR(stim) {
+      for(int i = 0; i < number_testmatrix; i++){
+         input_array[i].initializeRandom(2,2,10);
+      }
+
+      SC_THREAD(write);
+
+      SC_METHOD(compare);
+      sensitive << data_in->data_written_event();
 
    }
 
-   void go(){
-      matrix* mtrix = new matrix(2,2);
-      sc_fifo< processor_instruction > channel(16);
+   void write(){
 
       wait(2,SC_NS);
 
-      //mtrix->fillRandom(10);
+      for(int i = 0; i < number_testmatrix; i++){
+         if(data_out->num_free()){
+            data_out->write(input_array[i]);
+         }
+         else{
+            wait(2,SC_NS);
+         }
+      }
+   }
 
+   void compare(){
+
+      assert();
+
+      for(j = 0; j < number_outputmatrix; j++){
+            output_array[i] = channel_in.read();
+      }
    }
 
 };
