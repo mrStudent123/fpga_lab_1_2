@@ -8,7 +8,16 @@
 #include "matrix.h"
 #include <stdlib.h> /* fuer zufallszahlen */
 
-matrix::matrix(int width, int height) {
+matrix::matrix() {
+   w=0;
+   h=0;
+}
+
+matrix::~matrix() {
+   // TODO Auto-generated destructor stub
+}
+
+void matrix::initialize(unsigned short width, unsigned short height) {
    w = width;
    h = height;
 
@@ -20,11 +29,17 @@ matrix::matrix(int width, int height) {
    }
 }
 
-matrix::~matrix() {
-   // TODO Auto-generated destructor stub
+void matrix::initializeRandom(unsigned short width, unsigned short height, short max){
+   w = width;
+   h = height;
+
+   short matrix_data[width*height];
+   data = matrix_data;
+
+   fillRandom(max);
 }
 
-short matrix::get(int x, int y){
+short matrix::get(unsigned short x, unsigned short y){
    if(x > w || y > h){
       return 0;
    }
@@ -32,7 +47,7 @@ short matrix::get(int x, int y){
    return data[y*w + x];
 }
 
-bool matrix::put(int x, int y, short value){
+bool matrix::put(unsigned short x, unsigned short y, short value){
    if(x>w || y > h){
       return false;
    }
@@ -48,7 +63,8 @@ void matrix::add(matrix m){
 }
 
 void matrix::multiply(matrix m){
-   matrix result(h,m.w);
+   matrix result;
+   result.initialize(h, m.w);
 
    for(int result_x=0; result_x < result.w; result_x++)
    {

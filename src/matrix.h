@@ -15,11 +15,14 @@ class matrix {
    short data[];
 
 public:
-   matrix(int w, int h);
+   matrix();
    virtual ~matrix();
 
-   bool put(int x, int y, short value);
-   short get(int x, int y);
+   void initialize(unsigned short w, unsigned short h);
+   void initializeRandom(unsigned short w, unsigned short h, short max);
+
+   bool put(unsigned short x, unsigned short y, short value);
+   short get(unsigned short x, unsigned short y);
 
    void add(matrix m);
    void multiply(matrix m);
