@@ -9,13 +9,13 @@
 
 int sc_main(int argc, char* argv[]){
 
-   //channel_fifo_matrix inputFifo;
+   channel_fifo_matrix inputFifo;
 
    sc_clock clk ("clk", 2, SC_US);   // a clock with a period of 2 µ-sec
 
    matrix_multiplicator multiplicator ("multipl");
    multiplicator.clk(clk);
-   //multiplicator.input(inputFifo);
+   multiplicator.input(inputFifo);
 
    printf("start program");
 
