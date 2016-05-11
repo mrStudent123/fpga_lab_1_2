@@ -19,6 +19,7 @@ public:
    virtual ~matrix();
 
    void initialize(unsigned short w, unsigned short h);
+   void initialize_value(matrix m);
    void initializeRandom(unsigned short w, unsigned short h, short max);
 
    bool put(unsigned short x, unsigned short y, short value);

@@ -19,8 +19,10 @@ SC_MODULE(stim) {
    int j;
 
    SC_CTOR(stim) {
-      for(int i = 0; i < number_testmatrix; i++){
-         input_array[i].initializeRandom(2,2,10);
+      j = 0;
+
+      for(int ini = 0; ini < number_testmatrix; ini++){
+         input_array[ini].initializeRandom(2,2,10);
       }
 
       SC_THREAD(write);
@@ -45,11 +47,19 @@ SC_MODULE(stim) {
    }
 
    void compare(){
-
-      assert();
+      matrix a;
+      //matrix b;
 
       for(j = 0; j < number_outputmatrix; j++){
-            output_array[i] = channel_in.read();
+
+         a.initialize_value(input_array[j*2]);
+         a.multiply(input_array[j*2+1]);
+         output_array[j] = data_in->read();
+
+         assert( a.equals(output_array[j]));
+         SC_REPORT_INFO("error ","error");
+
+         cout << "Multiplication of:" << j*2 << " OK, time: "<< sc_time_stamp() << endl;
       }
    }
 
