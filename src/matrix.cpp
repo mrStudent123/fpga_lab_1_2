@@ -29,6 +29,18 @@ void matrix::initialize(unsigned short width, unsigned short height) {
    }
 }
 
+void matrix::initialize_value(matrix m) {
+   w = m.w;
+   h = m.h;
+
+   short matrix_data[w*h];
+   data = matrix_data;
+
+   for(int i=0; i<w*h; i++){
+      data[i] = m.data[i];
+   }
+}
+
 void matrix::initializeRandom(unsigned short width, unsigned short height, short max){
    w = width;
    h = height;
