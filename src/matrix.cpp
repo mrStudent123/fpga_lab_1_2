@@ -82,3 +82,17 @@ void matrix::fillRandom(short max){
       data[i] = rand() % max;
    }
 }
+
+bool matrix::equals(matrix m){
+   if(w != m.w || h != m.h){
+      return false;
+   }
+
+   for(int i=0; i<m*w; i++ ){
+      if(data[i] != m.data[i]){
+         return false;
+      }
+   }
+
+   return true;
+}

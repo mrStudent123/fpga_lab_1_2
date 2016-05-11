@@ -27,6 +27,8 @@ public:
    void add(matrix m);
    void multiply(matrix m);
    void fillRandom(short max);
+
+   bool equals(matrix m);
 };
 
 #endif /* MATRIX_H_ */
