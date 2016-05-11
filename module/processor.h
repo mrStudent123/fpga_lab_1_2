@@ -3,6 +3,7 @@
 
 #include "systemc.h"
 #include "processor_instruction.h"
+#include "channel_fifo_instruction.h"
 
 const unsigned short INSTR_NOP = 0x00;
 const unsigned short INSTR_SETA = 0x01;
@@ -14,7 +15,7 @@ SC_MODULE(processor) {
 
    short regA;
 
-   sc_port< sc_fifo_in_if<processor_instruction> > input;
+   sc_port< if_fifo_instruction_out > input;
    sc_in<bool> clk;
 
    SC_CTOR(processor) {
@@ -28,11 +29,11 @@ SC_MODULE(processor) {
    void do_stuff(){
       printf("load");
 
-      if(input->num_available() <= 0){
+      if(input->hasItems()){
          return;
       }
 
-      processor_instruction data = input->read();
+      processor_instruction data = input->getItem();
 
       switch(data.instruction)
       {

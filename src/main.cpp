@@ -1,21 +1,21 @@
 #include <stdio.h>
 #include "systemc.h"
 
-//#include "channel_processor_input_fifo.h"
+#include "processor_instruction.h"
 #include "processor.h"
 #include "stim.h"
+#include "channel_fifo_matrix.h"
+#include "matrix_multiplicator.h"
 
 int sc_main(int argc, char* argv[]){
 
-   //sc_fifo< processor_instruction > inputFifo(16);
-
-   //channel_processor_input_fifo input_channel;
+   //channel_fifo_matrix inputFifo;
 
    sc_clock clk ("clk", 2, SC_US);   // a clock with a period of 2 µ-sec
 
-   processor processor_inst ("processor_inst");
-   processor_inst.clk(clk);
-   //processor_inst.input(inputFifo);
+   matrix_multiplicator multiplicator ("multipl");
+   multiplicator.clk(clk);
+   //multiplicator.input(inputFifo);
 
    printf("start program");
 
