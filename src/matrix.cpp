@@ -69,7 +69,7 @@ bool matrix::put(unsigned short x, unsigned short y, short value){
 }
 
 void matrix::add(matrix m){
-   for(int i=0; i<m*w; i++){
+   for(int i=0; i<h*w; i++){
       data[i] += m.data[i];
    }
 }
@@ -100,7 +100,7 @@ bool matrix::equals(matrix m){
       return false;
    }
 
-   for(int i=0; i<m*w; i++ ){
+   for(int i=0; i<h*w; i++ ){
       if(data[i] != m.data[i]){
          return false;
       }

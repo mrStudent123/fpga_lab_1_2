@@ -7,7 +7,7 @@
 
 int sc_main(int argc, char* argv[]){
 
-   sc_fifo< processor_instruction > inputFifo(16);
+   //sc_fifo< processor_instruction > inputFifo(16);
 
    //channel_processor_input_fifo input_channel;
 
@@ -15,7 +15,7 @@ int sc_main(int argc, char* argv[]){
 
    processor processor_inst ("processor_inst");
    processor_inst.clk(clk);
-   processor_inst.input(inputFifo);
+   //processor_inst.input(inputFifo);
 
    printf("start program");
 

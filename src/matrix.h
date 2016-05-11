@@ -10,9 +10,10 @@
 
 class matrix {
 
+public:
    short unsigned w;
    short unsigned h;
-   short data[];
+   short *data;
 
 public:
    matrix();

@@ -47,7 +47,9 @@ bool matrix_multiplication_job::hasJobs(){
 }
 
 processor_job matrix_multiplication_job::getJob(){
-   return jobList.pop_front();
+   processor_job job =  jobList.front();
+   jobList.pop_front();
+   return job;
 }
 
 bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
