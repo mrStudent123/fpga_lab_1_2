@@ -38,19 +38,19 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: l1_2_multicore
+all: git_clone
 
 # Tool invocations
-l1_2_multicore: $(OBJS) $(USER_OBJS)
+git_clone: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -L/home/sclab64/Applications/systemc-2.3.1/lib-linux64/ -o "l1_2_multicore" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L/home/sclab64/Applications/systemc-2.3.1/lib-linux64/ -o "git_clone" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(OBJS)$(C++_DEPS)$(C_DEPS)$(CC_DEPS)$(CPP_DEPS)$(EXECUTABLES)$(CXX_DEPS)$(C_UPPER_DEPS) l1_2_multicore
+	-$(RM) $(OBJS)$(C++_DEPS)$(C_DEPS)$(CC_DEPS)$(CPP_DEPS)$(EXECUTABLES)$(CXX_DEPS)$(C_UPPER_DEPS) git_clone
 	-@echo ' '
 
 .PHONY: all clean dependents
