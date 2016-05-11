@@ -26,3 +26,11 @@
 *.exe
 *.out
 *.app
+
+#project folders
+.project
+.cproject
+
+#compiled files folder
+Debug
+
