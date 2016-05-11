@@ -8,7 +8,7 @@
 #include "matrix.h"
 #include <stdlib.h> /* fuer zufallszahlen */
 
-matrix::matrix(int width, int height) {
+matrix::matrix(unsigned short width, unsigned short height) {
    w = width;
    h = height;
 
@@ -24,7 +24,7 @@ matrix::~matrix() {
    // TODO Auto-generated destructor stub
 }
 
-short matrix::get(int x, int y){
+short matrix::get(unsigned short x, unsigned short y){
    if(x > w || y > h){
       return 0;
    }
@@ -32,7 +32,7 @@ short matrix::get(int x, int y){
    return data[y*w + x];
 }
 
-bool matrix::put(int x, int y, short value){
+bool matrix::put(unsigned short x, unsigned short y, short value){
    if(x>w || y > h){
       return false;
    }

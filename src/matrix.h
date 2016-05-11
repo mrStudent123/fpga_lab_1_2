@@ -15,11 +15,11 @@ class matrix {
    short data[];
 
 public:
-   matrix(int w, int h);
+   matrix(unsigned short w, unsigned short h);
    virtual ~matrix();
 
-   bool put(int x, int y, short value);
-   short get(int x, int y);
+   bool put(unsigned short x, unsigned short y, short value);
+   short get(unsigned short x, unsigned short y);
 
    void add(matrix m);
    void multiply(matrix m);
