@@ -30,3 +30,7 @@
 #project folders
 .project
 .cproject
+
+#compiled files folder
+Debug
+
