@@ -15,8 +15,11 @@ class matrix {
    short data[];
 
 public:
-   matrix(unsigned short w, unsigned short h);
+   matrix();
    virtual ~matrix();
+
+   void initialize(unsigned short w, unsigned short h);
+   void initializeRandom(unsigned short w, unsigned short h, short max);
 
    bool put(unsigned short x, unsigned short y, short value);
    short get(unsigned short x, unsigned short y);
