@@ -32,7 +32,7 @@ SC_MODULE(processor) {
          return;
       }
 
-      processor_instruction data = input.read();
+      processor_instruction data = input->read();
 
       switch(data.instruction)
       {
