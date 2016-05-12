@@ -4,6 +4,7 @@
 //#include "channel_processor_input_fifo.h"
 #include "processor.h"
 #include "stim.h"
+#include "processor_instruction.h"
 
 int sc_main(int argc, char* argv[]){
 
