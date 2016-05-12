@@ -4,8 +4,12 @@
 #include "processor_instruction.h"
 #include "processor.h"
 #include "stim.h"
+
+#include "processor_instruction.h"
+
 #include "channel_fifo_matrix.h"
 #include "matrix_multiplicator.h"
+
 
 int sc_main(int argc, char* argv[]){
 
