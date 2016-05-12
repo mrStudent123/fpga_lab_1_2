@@ -1,5 +1,5 @@
 #include "systemc.h"
-#include "processor_instruction.h"
+#include "../src/processor_instruction.h"
 #include "processor.h"
 
 #ifndef PROCESSOR_CHANNEL_FIFO

@@ -2,7 +2,7 @@
 #define ___PROCESSOR_DEF___
 
 #include "systemc.h"
-#include "processor_instruction.h"
+#include "../src/processor_instruction.h"
 #include "channel_fifo_instruction.h"
 
 const unsigned short INSTR_NOP = 0x00;
