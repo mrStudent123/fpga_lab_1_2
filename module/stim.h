@@ -19,6 +19,9 @@ SC_MODULE(stim) {
    int j;
 
    SC_CTOR(stim) {
+
+      printf("stim constructor\n");
+
       j = 0;
 
       for(int ini = 0; ini < number_testmatrix; ini++){
@@ -37,8 +40,10 @@ SC_MODULE(stim) {
       for(int i = 0; i < number_testmatrix; i++){
          if(data_out->num_free()){
             data_out->putItem(input_array[i]);
+            printf("stim writing matrix %d\n", i);
          }
          else{
+            printf("stim waiting, fifo full", i);
             wait(2,SC_NS);
          }
       }

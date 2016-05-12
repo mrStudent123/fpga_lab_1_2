@@ -24,6 +24,8 @@ SC_MODULE(matrix_multiplicator){
 
    SC_CTOR(matrix_multiplicator){
 
+      printf("mmult constructor\n");
+
       number_cores = 12;
       processor_job core_map[number_cores];
       processor_job_map = core_map;

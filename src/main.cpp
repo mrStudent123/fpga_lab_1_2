@@ -16,7 +16,7 @@ int sc_main(int argc, char* argv[]){
    channel_fifo_matrix inputFifo;
    channel_fifo_matrix outputFifo;
 
-   sc_clock clk ("clk", 2, SC_US);   // a clock with a period of 2 µ-sec
+   sc_clock clk ("clk", 1, SC_US);   // a clock with a period of 2 µ-sec
 
    stim stim_inst("stim");
    stim_inst.data_in(outputFifo);
