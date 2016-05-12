@@ -10,6 +10,8 @@
 #include "channel_fifo_matrix.h"
 #include "matrix_multiplicator.h"
 
+#include "stim_matrix_channel_test.h"
+
 
 int sc_main(int argc, char* argv[]){
 
@@ -17,6 +19,20 @@ int sc_main(int argc, char* argv[]){
    channel_fifo_matrix outputFifo;
 
    sc_clock clk ("clk", 1, SC_NS);   // a clock with a period of 2 µ-sec
+
+   /* MATRIX CHANNEL TEST
+   channel_fifo_matrix testchannel;
+   stim_channel_matrix_test stim_test("testinger");
+   stim_test.input(testchannel);
+   stim_test.output(testchannel);
+   stim_test.clk(clk); */
+
+   /* INSTRUCTION CHANNEL TEST
+   channel_fifo_instruction testchannel;
+   stim_channel_test stim_test("testinger");
+   stim_test.input(testchannel);
+   stim_test.output(testchannel);
+   stim_test.clk(clk);*/
 
    stim stim_inst("stim");
    stim_inst.data_in(outputFifo);

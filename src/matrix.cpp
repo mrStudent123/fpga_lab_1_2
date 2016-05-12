@@ -7,11 +7,11 @@
 
 #include "matrix.h"
 #include <stdlib.h> /* fuer zufallszahlen */
+#include <stdio.h>
 
 matrix::matrix() {
    w=0;
    h=0;
-   data=0;
 }
 
 matrix::~matrix() {
@@ -91,9 +91,12 @@ void matrix::multiply(matrix m){
 }
 
 void matrix::fillRandom(short max){
-   for(int i=0; i<w*h; i++){
-      data[i] = rand() % max;
+   for(short i=0; i<w*h; i++){
+      data[i] = (short)((rand() % (max*2)) - max);
    }
+
+   printf("random fill:\n");
+   debug_print();
 }
 
 bool matrix::equals(matrix m){
@@ -108,4 +111,16 @@ bool matrix::equals(matrix m){
    }
 
    return true;
+}
+
+void matrix::debug_print(){
+   printf("matrix data pointer %hd\n", data);
+   for(int i=0; i< w*h; i++){
+      printf("%2hd ", data[i]);
+
+      if((i-1)%w==0){
+         printf("\n");
+      }
+   }
+   printf("\n");
 }

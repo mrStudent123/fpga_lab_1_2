@@ -39,10 +39,13 @@ SC_MODULE(stim) {
 
       wait(2,SC_NS);
 
-      for(int i = 0; i < number_testmatrix; i++){
+      int i = 0;
+
+      while(i < number_testmatrix){
          if(data_out->num_free()){
             data_out->putItem(input_array[i]);
             printf("stim writing matrix %d\n", i);
+            i++;
          }
          else{
             printf("stim waiting, fifo full");

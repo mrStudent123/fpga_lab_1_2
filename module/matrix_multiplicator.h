@@ -26,7 +26,7 @@ SC_MODULE(matrix_multiplicator){
 
       printf("mmult constructor\n");
 
-      number_cores = 12;
+      number_cores = 1;
       processor_job core_map[number_cores];
       processor_job_map = core_map;
 
@@ -66,26 +66,22 @@ SC_MODULE(matrix_multiplicator){
             processor_job pjob = mjob.getJob();
 
             bool found_empty = false;
-            int core_to_feed = 0;
 
             while(!found_empty){
                for(int i=0; i<number_cores; i++){
                   if(!instruction_pipelines[i].hasItems()){
-                     core_to_feed = i;
                      found_empty = true;
                      //pjob merken für result zuordnung
                      processor_job_map[i] = pjob;
+
+                     processor_instruction *instr = pjob.getInstructions();
+                     printf("instruction %d, %d", instr[0].instruction, instr[0].data);
+                     printf("instruction %d, %d", instr[1].instruction, instr[1].data);
+                     instruction_pipelines[i].putItem(instr[0]);
+                     instruction_pipelines[i].putItem(instr[1]);
                      break;
                   }
                }
-            }
-
-            processor_instruction *instr = pjob.getInstructions();
-            if(instruction_pipelines[core_to_feed].num_free() >= 2){
-               printf("instruction %d, %d", instr[0].instruction, instr[0].data);
-               printf("instruction %d, %d", instr[1].instruction, instr[1].data);
-               instruction_pipelines[core_to_feed].putItem(instr[0]);
-               instruction_pipelines[core_to_feed].putItem(instr[1]);
             }
          }
       }

@@ -31,6 +31,8 @@ public:
    void fillRandom(short max);
 
    bool equals(matrix m);
+
+   void debug_print();
 };
 
 #endif /* MATRIX_H_ */
