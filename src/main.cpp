@@ -25,6 +25,7 @@ int sc_main(int argc, char* argv[]){
    matrix_multiplicator multiplicator ("multipl");
    multiplicator.clk(clk);
    multiplicator.input(inputFifo);
+   multiplicator.output(outputFifo);
 
    printf("start program");
 

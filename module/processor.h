@@ -17,6 +17,7 @@ SC_MODULE(processor) {
 
    sc_port< if_fifo_instruction_out > input;
    sc_in<bool> clk;
+   sc_port < sc_fifo_out_if<short> > output;
 
    SC_CTOR(processor) {
 
@@ -39,10 +40,12 @@ SC_MODULE(processor) {
       {
          case INSTR_ADD:
             regA += data.data;
+            output->write(regA);
          break;
 
          case INSTR_MUL:
             regA *= data.data;
+            output->write(regA);
          break;
 
          case INSTR_SETA:
