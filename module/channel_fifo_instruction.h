@@ -29,6 +29,7 @@ public:
    unsigned short index;
 
    channel_fifo_instruction(){
+      printf("instruction channel constructor\n");
       count = 0;
       index = 0;
    }

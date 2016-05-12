@@ -35,6 +35,8 @@ SC_MODULE(stim) {
 
    void write(){
 
+      printf("stim thread write\n");
+
       wait(2,SC_NS);
 
       for(int i = 0; i < number_testmatrix; i++){
@@ -43,13 +45,15 @@ SC_MODULE(stim) {
             printf("stim writing matrix %d\n", i);
          }
          else{
-            printf("stim waiting, fifo full", i);
+            printf("stim waiting, fifo full");
             wait(2,SC_NS);
          }
       }
    }
 
    void compare(){
+
+      printf("stim thread compare\n");
 
       while(1){
 

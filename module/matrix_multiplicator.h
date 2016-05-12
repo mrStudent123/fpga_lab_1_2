@@ -36,6 +36,7 @@ SC_MODULE(matrix_multiplicator){
       result_pipelines = result_pipes;
 
       for(int i=0; i<number_cores; i++){
+         printf("generating core%d \n", i);
          char name[5];
          sprintf(name, "core%d", i);
          processor* p = new processor(name);
@@ -46,9 +47,14 @@ SC_MODULE(matrix_multiplicator){
 
       SC_THREAD(do_input);
       SC_THREAD(do_output);
+
+      SC_METHOD(debug_clk)
+            sensitive << clk.pos();
    }
 
    void do_input(){
+      printf("mmult do_input\n");
+
       while(input->hasItems()){
          matrix m1 = input->getItem();
          matrix m2 = input->getItem();
@@ -58,8 +64,6 @@ SC_MODULE(matrix_multiplicator){
 
          while(mjob.hasJobs()){
             processor_job pjob = mjob.getJob();
-
-            processor_instruction *instr = pjob.getInstructions();
 
             bool found_empty = false;
             int core_to_feed = 0;
@@ -76,7 +80,10 @@ SC_MODULE(matrix_multiplicator){
                }
             }
 
+            processor_instruction *instr = pjob.getInstructions();
             if(instruction_pipelines[core_to_feed].num_free() >= 2){
+               printf("instruction %d, %d", instr[0].instruction, instr[0].data);
+               printf("instruction %d, %d", instr[1].instruction, instr[1].data);
                instruction_pipelines[core_to_feed].putItem(instr[0]);
                instruction_pipelines[core_to_feed].putItem(instr[1]);
             }
@@ -85,6 +92,7 @@ SC_MODULE(matrix_multiplicator){
    }
 
    void do_output(){
+      printf("mmult do_output\n");
       while(1){
 
          //check for processor outputs
@@ -107,6 +115,10 @@ SC_MODULE(matrix_multiplicator){
             }
          }
       }
+   }
+
+   void debug_clk(){
+      printf("clk event!\n");
    }
 };
 

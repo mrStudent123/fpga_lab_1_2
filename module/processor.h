@@ -20,7 +20,6 @@ SC_MODULE(processor) {
    sc_port < sc_fifo_out_if<short> > output;
 
    SC_CTOR(processor) {
-
       regA = 0;
 
       SC_METHOD(do_stuff)
@@ -28,7 +27,7 @@ SC_MODULE(processor) {
    }
 
    void do_stuff(){
-      printf("load");
+      printf("load\n");
 
       if(input->hasItems()){
          return;
