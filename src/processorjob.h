@@ -8,9 +8,11 @@
 #ifndef PROCESSORJOB_H_
 #define PROCESSORJOB_H_
 
-#define JOB_TYPE_NONE 0;
-#define JOB_TYPE_ADD 1;
-#define JOB_TYPE_MUL 2;
+#include "processor_instruction.h"
+
+const unsigned short JOB_TYPE_NONE = 0;
+const unsigned short JOB_TYPE_ADD = 1;
+const unsigned short JOB_TYPE_MUL = 2;
 
 class processor_job {
 public:
@@ -22,6 +24,8 @@ public:
 
    processor_job();
    virtual ~processor_job();
+
+   processor_instruction *getInstructions();
 };
 
 #endif /* PROCESSORJOB_H_ */

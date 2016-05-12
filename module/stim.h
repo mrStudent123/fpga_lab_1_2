@@ -1,10 +1,10 @@
 #ifndef stim_
 #define stim_
 
-
 #include "systemc.h"
 #include <math.h>
 #include "../src/matrix.h"
+#include "channel_fifo_matrix.h"
 
 #define number_testmatrix 100
 #define number_outputmatrix number_testmatrix/2
@@ -14,8 +14,8 @@ matrix output_array[number_outputmatrix];
 
 SC_MODULE(stim) {
 
-   sc_port< sc_fifo_out_if<matrix> > data_out;
-   sc_port< sc_fifo_in_if<matrix> > data_in;
+   sc_port< if_fifo_matrix_in > data_out;
+   sc_port< if_fifo_matrix_out > data_in;
    int j;
 
    SC_CTOR(stim) {
@@ -27,9 +27,7 @@ SC_MODULE(stim) {
 
       SC_THREAD(write);
 
-      SC_METHOD(compare);
-      sensitive << data_in->data_written_event();
-
+      SC_THREAD(compare);
    }
 
    void write(){
@@ -38,7 +36,7 @@ SC_MODULE(stim) {
 
       for(int i = 0; i < number_testmatrix; i++){
          if(data_out->num_free()){
-            data_out->write(input_array[i]);
+            data_out->putItem(input_array[i]);
          }
          else{
             wait(2,SC_NS);
@@ -47,19 +45,27 @@ SC_MODULE(stim) {
    }
 
    void compare(){
-      matrix a;
-      //matrix b;
 
-      for(j = 0; j < number_outputmatrix; j++){
+      while(1){
 
-         a.initialize_value(input_array[j*2]);
-         a.multiply(input_array[j*2+1]);
-         output_array[j] = data_in->read();
+         if(data_in->hasItems()){
+            matrix a;
+            //matrix b;
 
-         assert( a.equals(output_array[j]));
-         SC_REPORT_INFO("error ","error");
+            for(j = 0; j < number_outputmatrix; j++){
 
-         cout << "Multiplication of:" << j*2 << " OK, time: "<< sc_time_stamp() << endl;
+               a.initialize_value(input_array[j*2]);
+               a.multiply(input_array[j*2+1]);
+               output_array[j] = data_in->getItem();
+
+               assert( a.equals(output_array[j]));
+               SC_REPORT_INFO("error ","error");
+
+               cout << "Multiplication of:" << j*2 << " OK, time: "<< sc_time_stamp() << endl;
+            }
+         }
+
+         wait(2, SC_NS);
       }
    }
 
