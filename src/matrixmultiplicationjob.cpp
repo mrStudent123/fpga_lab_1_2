@@ -15,7 +15,8 @@ matrix_multiplication_job::matrix_multiplication_job(unsigned id, matrix matrix1
    m2 = matrix2;
 
    result.initialize(m1.h, m2.w);
-   number_of_finished_fields = 0;
+   num_received_add_results = 0;
+   MAX_NUM_RECEIVED_ADD_RESULTS = result.w*result.h*(m1.w-1);
 
    for(int result_x=0; result_x < result.w; result_x++)
       {
@@ -54,20 +55,33 @@ processor_job matrix_multiplication_job::getJob(){
 
 bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
 
-   if(pjob.type == JOB_TYPE_MUL){
-      //type == MUL
-   }
-   else if(pjob.type == JOB_TYPE_ADD){
-      //type == ADD
+   if(pjob.type == JOB_TYPE_ADD){
+      num_received_add_results++;
+
+      if(num_received_add_results >= MAX_NUM_RECEIVED_ADD_RESULTS ||
+            (value == 0 && num_received_add_results >= (MAX_NUM_RECEIVED_ADD_RESULTS -1))){
+         result.data[pjob.matrix_field] = value;
+         return true;
+      }
    }
 
-   /*if(pjob.type == JOB_TYPE_MUL)
-   {
-      //TODO: create add job
+   if(value == 0){
+      return false;
    }
-   else if(job.type == JOB_TYPE_ADD){
-      //TODO: check if it was the last addition, if so write value to field and (if last field) return true, otherwise create new add job
-   }*/
+
+   // for both mul and add jobs
+   if(result.data[pjob.matrix_field] == 0){
+      result.data[pjob.matrix_field] = value;
+   }
+   else {
+      processor_job addjob;
+      addjob.calculation_id = _id;
+      addjob.matrix_field = pjob.matrix_field;
+      addjob.data2 = value;
+      addjob.data1 = result.data[pjob.matrix_field];
+      result.data[pjob.matrix_field] = 0;
+      jobList.push_back(addjob);
+   }
 
    return false;
 }

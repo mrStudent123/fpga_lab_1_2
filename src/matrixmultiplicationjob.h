@@ -15,8 +15,9 @@
 class matrix_multiplication_job {
 private:
    matrix result;
-   unsigned number_of_finished_fields;
    std::list<processor_job> jobList;
+   unsigned num_received_add_results;
+   unsigned MAX_NUM_RECEIVED_ADD_RESULTS;
 public:
    unsigned _id;
    matrix m1;
