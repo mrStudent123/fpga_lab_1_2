@@ -19,13 +19,29 @@ SC_MODULE(stim) {
    int j;
 
    SC_CTOR(stim) {
+      bool a = false;
 
       printf("stim constructor\n");
 
       j = 0;
 
       for(int ini = 0; ini < number_testmatrix; ini++){
+
          input_array[ini].initializeRandom(2,2,10);
+         //printf("%d:",ini);
+         //printf("%hd, %hd,", input_array[ini].get(0,0), input_array[ini].get(1,0));
+         //printf(" %hd, %hd\n", input_array[ini].get(0,1),input_array[ini].get(1,1));
+         a = true;
+      }
+
+      // print testvalues
+      if(a == true){
+         for(int ab = 0; ab < number_testmatrix; ab++){
+            printf("%d:",ab);
+            printf("%hd, %hd,", input_array[ab].get(0,0), input_array[ab].get(1,0));
+            printf(" %hd, %hd\n", input_array[ab].get(0,1),input_array[ab].get(1,1));
+            //printf("%p: \n",input_array[ab].data);
+         }
       }
 
       SC_THREAD(write);

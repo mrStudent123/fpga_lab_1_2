@@ -10,6 +10,7 @@
 #include <stdio.h>
 
 matrix::matrix() {
+   data = 0;
    w=0;
    h=0;
 }
@@ -46,10 +47,11 @@ void matrix::initializeRandom(unsigned short width, unsigned short height, short
    w = width;
    h = height;
 
-   short matrix_data[width*height];
-   data = matrix_data;
+   //short matrix_data[width*height];
+   data = new short[width*height];
 
    fillRandom(max);
+   //return data;
 }
 
 short matrix::get(unsigned short x, unsigned short y){
@@ -95,7 +97,7 @@ void matrix::fillRandom(short max){
       data[i] = (short)((rand() % (max*2)) - max);
    }
 
-   printf("random fill:\n");
+   //printf("random fill:\n");
    debug_print();
 }
 
@@ -114,13 +116,9 @@ bool matrix::equals(matrix m){
 }
 
 void matrix::debug_print(){
-   printf("matrix data pointer %hd\n", data);
+   //printf("matrix data pointer %p\n", data);
    for(int i=0; i< w*h; i++){
-      printf("%2hd ", data[i]);
-
-      if((i-1)%w==0){
-         printf("\n");
-      }
+      //printf("%2hd ", data[i]);
    }
-   printf("\n");
+   //printf("\n");
 }
