@@ -45,7 +45,9 @@ SC_MODULE(matrix_multiplicator){
       }
 
       SC_THREAD(do_input);
-      //SC_THREAD(do_output);
+      SC_METHOD(do_output);
+           sensitive << clk.neg();
+
       //SC_METHOD(debug_clk)
       //     sensitive << clk.pos();
 
@@ -107,7 +109,7 @@ SC_MODULE(matrix_multiplicator){
             matrix_multiplication_job mjob(0, m1, m2);
             currently_processed_matrices.push_back(mjob);
 
-            while(mjob.hasJobs()){
+            //while(mjob.hasJobs()){
                processor_job pjob = mjob.getJob();
 
                bool found_empty = false;
@@ -131,39 +133,35 @@ SC_MODULE(matrix_multiplicator){
                      }
                   }
                }
-            }
+            //}
          }
       //}
    }
 
    void do_output(){
-      printf("mmult do_output for %d cores\n", number_cores);
-      while(true){
+      //printf("mmult do_output for %d cores\n", number_cores);
 
-         //check for processor outputs
-         for(int i=0; i<number_cores; i++){
-            if(result_pipelines[i].hasItems()){
-               printf("resultst available in %d\n", i);
-               for(MatrixList::iterator it = currently_processed_matrices.begin();
-                     it != currently_processed_matrices.end();
-                     it++)
-               {
-                  if((*it)._id == processor_job_map[i].calculation_id){
-                     if((*it).putJobResult(processor_job_map[i], result_pipelines[i].getItem())){
-                        //fertige matrix rausschreiben
-                        output->putItem((*it).getResult());
-                        currently_processed_matrices.erase(it);
-                     }
-                     break;
+      //check for processor outputs
+      for(int i=0; i<number_cores; i++){
+         if(result_pipelines[i].hasItems()){
+            printf("results available in %d\n", i);
+            for(MatrixList::iterator it = currently_processed_matrices.begin();
+                  it != currently_processed_matrices.end();
+                  it++)
+            {
+               if((*it)._id == processor_job_map[i].calculation_id){
+                  if((*it).putJobResult(processor_job_map[i], result_pipelines[i].getItem())){
+                     //fertige matrix rausschreiben
+                     output->putItem((*it).getResult());
+                     currently_processed_matrices.erase(it);
                   }
+                  break;
                }
             }
-            else {
-               printf("no results to process\n");
-            }
          }
-
-         printf("output loop\n");
+         else {
+            //printf("no results to process\n");
+         }
       }
    }
 

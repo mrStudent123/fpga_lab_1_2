@@ -28,10 +28,10 @@ SC_MODULE(processor) {
    }
 
    void do_stuff(){
-      printf("load\n");
+      //printf("load\n");
 
       if(!(input->hasItems())){
-         printf("no instructions in queue\n");
+         //printf("no instructions in queue\n");
          return;
       }
 
