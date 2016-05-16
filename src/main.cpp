@@ -50,7 +50,7 @@ int sc_main(int argc, char* argv[]){
 
 
    printf("start program\n");
-   sc_start(10, SC_SEC);
+   sc_start(1, SC_SEC);
 
    //sc_close_vcd_trace_file(tf);   // close trace file
 

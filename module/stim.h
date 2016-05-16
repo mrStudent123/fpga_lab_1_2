@@ -9,41 +9,66 @@
 #define number_testmatrix 100
 #define number_outputmatrix number_testmatrix/2
 
-matrix input_array[number_testmatrix];
-matrix output_array[number_outputmatrix];
+
 
 SC_MODULE(stim) {
 
+public:
    sc_port< if_fifo_matrix_in > data_out;
    sc_port< if_fifo_matrix_out > data_in;
-   int j;
 
+   matrix input_array[number_testmatrix];
+   matrix output_array[number_outputmatrix];
+   matrix input_array_multiplied[number_outputmatrix];
+
+private:
+
+
+public:
    SC_CTOR(stim) {
-
       printf("stim constructor\n");
 
-      j = 0;
+      matrix mul;
+      mul.initialize(2,2);
 
-      for(int ini = 0; ini < number_testmatrix; ini++){
-
-         input_array[ini].initializeRandom(2,2,10);
-         //printf("%d:",ini);
-         //printf("%hd, %hd,", input_array[ini].get(0,0), input_array[ini].get(1,0));
-         //printf(" %hd, %hd\n", input_array[ini].get(0,1),input_array[ini].get(1,1));
+      for(int i = 0; i < number_testmatrix; i++){
+         input_array[i].initialize(2,2);
+         input_array[i].initializeRandom_twoxtwo(10);
       }
 
-      // print testvalues
-      for(int ab = 0; ab < number_testmatrix; ab++){
-         printf("%d:",ab);
-         printf("%hd, %hd,", input_array[ab].get(0,0), input_array[ab].get(1,0));
-         printf(" %hd, %hd\n", input_array[ab].get(0,1),input_array[ab].get(1,1));
-         //printf("%p: \n",input_array[ab].data);
+      for(int i = 0; i < number_outputmatrix; i++){
+         output_array[i].initialize(2,2);
+         input_array_multiplied[i].initialize(2,2);
       }
+
+      for(int i = 0; i < number_outputmatrix; i++){
+         mul.initialize_value_twoxtwo(input_array[i*2]);
+         mul.multiply_twoxtwo(input_array[i*2+1]);
+         input_array_multiplied[i].initialize_value(mul);
+      }
+
+      // print: testvalues
+      /*
+      printf("---test values---\n");
+      for(int i = 0; i < number_testmatrix; i++){
+         printf("%d:",i);
+         printf("%hd, %hd,", input_array[i].get(0,0), input_array[i].get(1,0));
+         printf(" %hd, %hd\n", input_array[i].get(0,1),input_array[i].get(1,1));
+      }*/
+
+      // print: test values multiplied
+      /*
+      printf("---test values multiplied---\n");
+      for(int i = 0; i < number_outputmatrix; i++){
+         printf("%d:",i);
+         printf("%hd, %hd,", input_array_multiplied[i].get(0,0), input_array_multiplied[i].get(1,0));
+         printf(" %hd, %hd\n", input_array_multiplied[i].get(0,1),input_array_multiplied[i].get(1,1));
+      }*/
 
 
       SC_THREAD(write);
 
-      SC_THREAD(compare);
+      //SC_THREAD(compare);
    }
 
    void write(){
@@ -61,40 +86,39 @@ SC_MODULE(stim) {
             i++;
          }
          else{
-            printf("stim waiting, fifo full");
-            wait(2,SC_NS);
+            //printf("stim waiting, fifo full");
+            wait(200,SC_NS);
          }
       }
    }
 
    void compare(){
+      matrix a;
 
       printf("stim thread compare\n");
 
       while(1){
 
-         if(data_in->hasItems()){
-            matrix a;
-            //matrix b;
-
-            for(j = 0; j < number_outputmatrix; j++){
-
+         for(int j = 0; j < number_outputmatrix;){
+            if(data_in->hasItems()){
                a.initialize_value(input_array[j*2]);
                a.multiply(input_array[j*2+1]);
                output_array[j] = data_in->getItem();
+               j++;
 
-               assert( a.equals(output_array[j]));
-               SC_REPORT_INFO("error ","error");
-
-               cout << "Multiplication of:" << j*2 << " OK, time: "<< sc_time_stamp() << endl;
+               //assert( a.equals(output_array[j]));
+               //SC_REPORT_INFO("error ","error");
             }
-         }
+            else{
+               wait(2, SC_US);
+            }
 
-         wait(2, SC_NS);
+         }
       }
    }
-
 };
+
+//cout << "Multiplication of:" << j*2 << " OK, time: "<< sc_time_stamp() << endl;
 
 #endif
 

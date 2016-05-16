@@ -35,6 +35,7 @@ SC_MODULE(matrix_multiplicator){
       instruction_pipelines = pipes;
       result_pipelines = result_pipes;
 
+      /*
       for(int i=0; i<number_cores; i++){
          printf("generating core%d \n", i);
          char name[5];
@@ -44,12 +45,13 @@ SC_MODULE(matrix_multiplicator){
          p->input(instruction_pipelines[i]);
          p->output(result_pipes[i]);
       }
+      */
 
-      SC_THREAD(do_input);
-      SC_THREAD(do_output);
+      //SC_THREAD(do_input);
+      //SC_THREAD(do_output);
 
-      SC_METHOD(debug_clk)
-            sensitive << clk.pos();
+      //SC_METHOD(debug_clk)
+      //      sensitive << clk.pos();
    }
 
    void do_input(){

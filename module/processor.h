@@ -22,8 +22,8 @@ SC_MODULE(processor) {
    SC_CTOR(processor) {
       regA = 0;
 
-      SC_METHOD(do_stuff)
-            sensitive << clk.pos();
+      //SC_METHOD(do_stuff)
+      //      sensitive << clk.pos();
    }
 
    void do_stuff(){

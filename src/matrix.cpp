@@ -31,10 +31,24 @@ void matrix::initialize(unsigned short width, unsigned short height) {
 }
 
 void matrix::initialize_value(matrix m) {
-   w = m.w;
-   h = m.h;
 
-   data = new short[w*h];
+   if(w != m.w || h != m.h){
+      printf("w,h: %hd %hd %hd %hd\n", w, h, m.w, m.h);
+      printf("error in matrix::initialize_value\n");
+      abort();
+   }
+
+   for(int i=0; i<w*h; i++){
+      data[i] = m.data[i];
+   }
+}
+
+void matrix::initialize_value_twoxtwo(matrix m) {
+
+   if(w != 2 || h != 2 || m.w != 2 || m.h != 2){
+      printf("error in matrix::initialize_value_twoxtwo\n");
+      abort();
+   }
 
    for(int i=0; i<w*h; i++){
       data[i] = m.data[i];
@@ -48,7 +62,18 @@ void matrix::initializeRandom(unsigned short width, unsigned short height, short
    data = new short[width*height];
 
    fillRandom(max);
-   //return data;
+
+}
+
+void matrix::initializeRandom_twoxtwo(short max){
+
+   if(w != 2 || h != 2){
+      printf("error in matrix::initializeRandom_twoxtwo\n");
+      abort();
+   }
+
+   fillRandom(max);
+
 }
 
 short matrix::get(unsigned short x, unsigned short y){
@@ -87,6 +112,43 @@ void matrix::multiply(matrix m){
          }
       }
    }
+
+   //for(int j=0; j<w && j < m.h; j++){
+   //   data[j] = result.data[j];
+   //}
+}
+
+void matrix::multiply_twoxtwo(matrix m){
+   matrix temp;
+   temp.initialize(2,2);
+
+   matrix result;
+   result.initialize(2, 2);
+
+   if(w != 2 || h != 2){
+      printf("error in multiply_twoxtwo\n");
+      abort();
+   }
+
+   temp.data[0] = data[0];
+   temp.data[1] = data[1];
+   temp.data[2] = data[2];
+   temp.data[3] = data[3];
+
+   result.data[0] = temp.data[0]*m.data[0] + temp.data[1]*m.data[2];
+   result.data[1] = temp.data[0]*m.data[1] + temp.data[1]*m.data[3];
+   result.data[2] = temp.data[2]*m.data[0] + temp.data[3]*m.data[2];
+   result.data[3] = temp.data[2]*m.data[1] + temp.data[3]*m.data[3];
+
+   //printf("a: %hd, %hd, %hd, %hd \n", temp.data[0], temp.data[1], temp.data[2], temp.data[3]);
+   //printf("b: %hd, %hd, %hd, %hd \n", m.data[0], m.data[1], m.data[2], m.data[3]);
+   //printf("axb: %hd, %hd, %hd, %hd \n", result.data[0], result.data[1], result.data[2], result.data[3]);
+
+   data[0] = result.data[0];
+   data[1] = result.data[1];
+   data[2] = result.data[2];
+   data[3] = result.data[3];
+
 }
 
 void matrix::fillRandom(short max){

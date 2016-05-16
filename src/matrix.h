@@ -21,13 +21,16 @@ public:
 
    void initialize(unsigned short w, unsigned short h);
    void initialize_value(matrix m);
+   void initialize_value_twoxtwo(matrix m);
    void initializeRandom(unsigned short w, unsigned short h, short max);
+   void initializeRandom_twoxtwo(short max);
 
    bool put(unsigned short x, unsigned short y, short value);
    short get(unsigned short x, unsigned short y);
 
    void add(matrix m);
    void multiply(matrix m);
+   void multiply_twoxtwo(matrix m);
    void fillRandom(short max);
 
    bool equals(matrix m);
