@@ -26,7 +26,7 @@ SC_MODULE(matrix_multiplicator){
 
       printf("mmult constructor\n");
 
-      number_cores = 1;
+      number_cores = 10;
 
       processor_job_map = new processor_job[number_cores];
 
@@ -133,8 +133,8 @@ SC_MODULE(matrix_multiplicator){
       processor_job_map[i] = pjob;
 
       processor_instruction *instr = pjob.getInstructions();
-      printf("instruction %d, %d \n", instr[0].instruction, instr[0].data);
-      printf("instruction %d, %d \n", instr[1].instruction, instr[1].data);
+      //printf("instruction %d, %d \n", instr[0].instruction, instr[0].data);
+      //printf("instruction %d, %d \n", instr[1].instruction, instr[1].data);
       instruction_pipelines[i].putItem(instr[0]);
       instruction_pipelines[i].putItem(instr[1]);
    }
@@ -145,7 +145,7 @@ SC_MODULE(matrix_multiplicator){
       //check for processor outputs
       for(int i=0; i<number_cores; i++){
          if(result_pipelines[i].hasItems()){
-            printf("results available in %d\n", i);
+            //printf("results available in %d\n", i);
             for(MatrixList::iterator it = currently_processed_matrices.begin();
                   it != currently_processed_matrices.end();
                   it++)
@@ -153,6 +153,7 @@ SC_MODULE(matrix_multiplicator){
                if((*it)._id == processor_job_map[i].calculation_id){
                   if((*it).putJobResult(processor_job_map[i], result_pipelines[i].getItem())){
                      //fertige matrix rausschreiben
+                     printf("finished calculation\n");
                      output->putItem((*it).getResult());
                      currently_processed_matrices.erase(it);
                   }

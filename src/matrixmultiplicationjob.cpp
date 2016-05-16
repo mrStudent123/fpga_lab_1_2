@@ -55,6 +55,7 @@ bool matrix_multiplication_job::hasJobs(){
 processor_job matrix_multiplication_job::getJob(){
    processor_job job =  jobList.front();
    jobList.pop_front();
+   //printf("jobList remaining size: %d\n", jobList.size());
    return job;
 }
 

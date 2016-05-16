@@ -35,7 +35,7 @@ SC_MODULE(processor) {
          return;
       }
 
-      printf("processing new instruction\n");
+      //printf("processing new instruction\n");
 
       processor_instruction data = input->getItem();
 
