@@ -65,6 +65,7 @@ SC_MODULE(matrix_multiplicator){
             printf("multi: ");
             printf("%hd, %hd,", m1.get(0,0), m1.get(1,0));
             printf(" %hd, %hd\n", m1.get(0,1),m1.get(1,1));
+
             //output->putItem(m1);
 
             while(h){
