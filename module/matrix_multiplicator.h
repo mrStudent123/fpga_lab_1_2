@@ -89,11 +89,18 @@ SC_MODULE(matrix_multiplicator){
    void do_input(){
       printf("waiting for first input\n");
 
-      while(true){
-         if(input->hasItems())
+      //while(true){
+         //if(input->hasItems())
+         if(true)
          {
-            matrix m1 = input->getItem();
-            matrix m2 = input->getItem();
+            //matrix m1 = input->getItem();
+            //matrix m2 = input->getItem();
+
+            matrix m1;
+            matrix m2;
+
+            m1.initializeRandom(2,2,5);
+            m2.initializeRandom(2,2,5);
 
             printf("new matrix input\n");
 
@@ -126,7 +133,7 @@ SC_MODULE(matrix_multiplicator){
                }
             }
          }
-      }
+      //}
    }
 
    void do_output(){
