@@ -68,6 +68,8 @@ public:
 
       SC_THREAD(write);
 
+      SC_THREAD(read);
+
       //SC_THREAD(compare);
    }
 
@@ -87,8 +89,27 @@ public:
          }
          else{
             //printf("stim waiting, fifo full");
+            wait(20,SC_NS);
+         }
+      }
+   }
+
+   void read(){
+      matrix a;
+      a.initialize(2,2);
+
+      while(1){
+
+         if(data_in->hasItems()){
+            a = data_in->getItem();
+            printf("stim: ");
+            printf("%hd, %hd,", a.get(0,0), a.get(1,0));
+            printf(" %hd, %hd\n", a.get(0,1),a.get(1,1));
+         }
+         else{
             wait(200,SC_NS);
          }
+
       }
    }
 

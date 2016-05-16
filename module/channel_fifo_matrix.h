@@ -35,6 +35,7 @@ public:
    }
 
    virtual bool putItem(matrix val ){
+      //printf("putItem: count, index: %hd, %hd\n", count, index);
       if(count >= MATRIX_FIFO_SIZE){
          return false;
       }
@@ -50,6 +51,7 @@ public:
    }
 
   virtual matrix getItem(){
+     //printf("getItem: count, index: %hd, %hd\n", count, index);
      if(count > 0){
         count --;
 
