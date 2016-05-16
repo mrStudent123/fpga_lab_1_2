@@ -8,12 +8,15 @@
 #include "matrixmultiplicationjob.h"
 #include "processorjob.h"
 #include <stdio.h>
+#include <iostream>
 
 matrix_multiplication_job::matrix_multiplication_job(unsigned id, matrix matrix1, matrix matrix2) {
 
    _id = id;
    m1 = matrix1;
    m2 = matrix2;
+
+   jobList = new PJobList();
 
    printf("new matrix job\n");
    m1.debug_print();
@@ -23,21 +26,26 @@ matrix_multiplication_job::matrix_multiplication_job(unsigned id, matrix matrix1
    num_received_add_results = 0;
    MAX_NUM_RECEIVED_ADD_RESULTS = result.w*result.h*(m1.w-1);
 
+   //printf("initial job list size %lu\n", (*jobList).size());
+
    for(int result_x=0; result_x < result.w; result_x++)
+   {
+      for(int result_y=0; result_y < result.h; result_y++)
       {
-         for(int result_y=0; result_y < result.h; result_y++)
-         {
-            for(int i=0; i<m1.w && i < m2.h; i++){
-               processor_job job;
-               job.calculation_id = _id;
-               job.matrix_field = result_y * result.w + result_x;
-               job.data1 = m1.get(result_y,i);
-               job.data2 = m2.get(i, result_x);
-               job.type = JOB_TYPE_MUL;
-               jobList.push_back(job);
-            }
+         for(int i=0; i<m1.w && i < m2.h; i++){
+            processor_job job;
+            job.calculation_id = _id;
+            job.matrix_field = result_y * result.w + result_x;
+            job.data1 = m1.get(result_y,i);
+            job.data2 = m2.get(i, result_x);
+            job.type = JOB_TYPE_MUL;
+            (*jobList).push_back(job);
+            //printf("Adding job to job list\n");
          }
       }
+   }
+
+   //printf("new job list size %lu\n", (*jobList).size());
 }
 
 matrix_multiplication_job::~matrix_multiplication_job() {
@@ -49,13 +57,14 @@ matrix matrix_multiplication_job::getResult(){
 }
 
 bool matrix_multiplication_job::hasJobs(){
-   return jobList.size()>0;
+   return (*jobList).size()>0;
 }
 
 processor_job matrix_multiplication_job::getJob(){
-   processor_job job =  jobList.front();
-   jobList.pop_front();
-   //printf("jobList remaining size: %d\n", jobList.size());
+   //printf("reading from job list, size %lu\n", (*jobList).size());
+   processor_job job =  (*jobList).front();
+   (*jobList).pop_front();
+   //printf("size after reading %lu\n", (*jobList).size());
    return job;
 }
 
@@ -67,7 +76,12 @@ bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
       if(num_received_add_results >= MAX_NUM_RECEIVED_ADD_RESULTS ||
             (value == 0 && num_received_add_results >= (MAX_NUM_RECEIVED_ADD_RESULTS -1))){
          result.data[pjob.matrix_field] = value;
+
+         //printf("finished mmult job!\n");
          return true;
+      }
+      else {
+         //printf("received add result, %d to go!", MAX_NUM_RECEIVED_ADD_RESULTS-num_received_add_results);
       }
    }
 
@@ -86,7 +100,7 @@ bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
       addjob.data2 = value;
       addjob.data1 = result.data[pjob.matrix_field];
       result.data[pjob.matrix_field] = 0;
-      jobList.push_back(addjob);
+      (*jobList).push_back(addjob);
    }
 
    return false;

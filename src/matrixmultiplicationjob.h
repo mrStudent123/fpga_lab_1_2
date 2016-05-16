@@ -15,7 +15,10 @@
 class matrix_multiplication_job {
 private:
    matrix result;
-   std::list<processor_job> jobList;
+
+   typedef std::list<processor_job> PJobList;
+   PJobList *jobList;
+
    unsigned num_received_add_results;
    unsigned MAX_NUM_RECEIVED_ADD_RESULTS;
 public:
