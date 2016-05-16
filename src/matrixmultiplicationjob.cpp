@@ -7,12 +7,17 @@
 
 #include "matrixmultiplicationjob.h"
 #include "processorjob.h"
+#include <stdio.h>
 
 matrix_multiplication_job::matrix_multiplication_job(unsigned id, matrix matrix1, matrix matrix2) {
 
    _id = id;
    m1 = matrix1;
    m2 = matrix2;
+
+   printf("new matrix job\n");
+   m1.debug_print();
+   m2.debug_print();
 
    result.initialize(m1.h, m2.w);
    num_received_add_results = 0;
