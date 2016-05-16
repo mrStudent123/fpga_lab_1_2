@@ -14,7 +14,7 @@ SC_MODULE(matrix_multiplicator){
    sc_in <bool> clk;
 
    typedef std::list<matrix_multiplication_job> MatrixList;
-   MatrixList currently_processed_matrices;
+   MatrixList *currently_processed_matrices;
 
    unsigned short number_cores;
    processor_job *processor_job_map;
@@ -28,6 +28,7 @@ SC_MODULE(matrix_multiplicator){
 
       number_cores = 10;
 
+      currently_processed_matrices = new MatrixList;
       processor_job_map = new processor_job[number_cores];
 
       instruction_pipelines = new channel_fifo_instruction[number_cores];;
@@ -49,9 +50,6 @@ SC_MODULE(matrix_multiplicator){
       SC_METHOD(do_output);
            sensitive << clk.neg();
 
-      //SC_METHOD(debug_clk)
-      //     sensitive << clk.pos();
-
       //SC_THREAD(test_stim);
    }
 
@@ -66,8 +64,8 @@ SC_MODULE(matrix_multiplicator){
             bool found = false;
 
             //matrizen durchgehn und schaun obs noch jobs gibt
-            for(MatrixList::iterator it = currently_processed_matrices.begin();
-               it != currently_processed_matrices.end();
+            for(MatrixList::iterator it = (*currently_processed_matrices).begin();
+               it != (*currently_processed_matrices).end();
                it++)
             {
                //printf("checking processed matrices\n");
@@ -86,10 +84,10 @@ SC_MODULE(matrix_multiplicator){
                matrix m1 = input->getItem();
                matrix m2 = input->getItem();
 
-               printf("new matrix input\n");
+               printf("new matrix input, size: %lu\n", (*currently_processed_matrices).size());
 
                matrix_multiplication_job mjob(0, m1, m2);
-               currently_processed_matrices.push_back(mjob);
+               (*currently_processed_matrices).push_back(mjob);
                process(mjob, i);
             }
          }
@@ -116,8 +114,8 @@ SC_MODULE(matrix_multiplicator){
       for(int i=0; i<number_cores; i++){
          if(result_pipelines[i].hasItems()){
             //printf("results available in %d\n", i);
-            for(MatrixList::iterator it = currently_processed_matrices.begin();
-                  it != currently_processed_matrices.end();
+            for(MatrixList::iterator it = (*currently_processed_matrices).begin();
+                  it != (*currently_processed_matrices).end();
                   it++)
             {
                if((*it)._id == processor_job_map[i].calculation_id){
@@ -125,7 +123,7 @@ SC_MODULE(matrix_multiplicator){
                      //fertige matrix rausschreiben
                      printf("finished calculation\n");
                      output->putItem((*it).getResult());
-                     currently_processed_matrices.erase(it);
+                     (*currently_processed_matrices).erase(it);
                   }
                   break;
                }
@@ -135,10 +133,6 @@ SC_MODULE(matrix_multiplicator){
             //printf("no results to process\n");
          }
       }
-   }
-
-   void debug_clk(){
-      printf("clk event!\n");
    }
 };
 

@@ -70,6 +70,8 @@ processor_job matrix_multiplication_job::getJob(){
 
 bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
 
+   printf("received mmult job result\n");
+
    if(pjob.type == JOB_TYPE_ADD){
       num_received_add_results++;
 
@@ -77,11 +79,11 @@ bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
             (value == 0 && num_received_add_results >= (MAX_NUM_RECEIVED_ADD_RESULTS -1))){
          result.data[pjob.matrix_field] = value;
 
-         //printf("finished mmult job!\n");
+         printf("finished mmult job!\n");
          return true;
       }
       else {
-         //printf("received add result, %d to go!", MAX_NUM_RECEIVED_ADD_RESULTS-num_received_add_results);
+         printf("received add result, %d to go!", MAX_NUM_RECEIVED_ADD_RESULTS-num_received_add_results);
       }
    }
 
@@ -92,6 +94,7 @@ bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
    // for both mul and add jobs
    if(result.data[pjob.matrix_field] == 0){
       result.data[pjob.matrix_field] = value;
+      printf("result field is 0\n");
    }
    else {
       processor_job addjob;
@@ -101,6 +104,7 @@ bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
       addjob.data1 = result.data[pjob.matrix_field];
       result.data[pjob.matrix_field] = 0;
       (*jobList).push_back(addjob);
+      printf("added new add job, size: %lu\n", (*jobList).size());
    }
 
    return false;
