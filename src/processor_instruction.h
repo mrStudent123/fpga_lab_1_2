@@ -5,7 +5,7 @@ struct processor_instruction {
 
 public:
    unsigned short instruction;
-   unsigned short data;
+   short data;
 };
 
 #endif

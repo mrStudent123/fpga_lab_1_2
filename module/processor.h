@@ -4,6 +4,7 @@
 #include "systemc.h"
 #include "../src/processor_instruction.h"
 #include "channel_fifo_instruction.h"
+#include "channel_fifo_short.h"
 
 const unsigned short INSTR_NOP = 0x00;
 const unsigned short INSTR_SETA = 0x01;
@@ -17,21 +18,24 @@ SC_MODULE(processor) {
 
    sc_port< if_fifo_instruction_out > input;
    sc_in<bool> clk;
-   sc_port < sc_fifo_out_if<short> > output;
+   sc_port < if_fifo_short_in > output;
 
    SC_CTOR(processor) {
       regA = 0;
 
-      //SC_METHOD(do_stuff)
-      //      sensitive << clk.pos();
+      SC_METHOD(do_stuff)
+            sensitive << clk.pos();
    }
 
    void do_stuff(){
-      printf("load\n");
+      //printf("load\n");
 
-      if(input->hasItems()){
+      if(!(input->hasItems())){
+         //printf("no instructions in queue\n");
          return;
       }
+
+      printf("processing new instruction\n");
 
       processor_instruction data = input->getItem();
 
@@ -39,12 +43,14 @@ SC_MODULE(processor) {
       {
          case INSTR_ADD:
             regA += data.data;
-            output->write(regA);
+            //TODO: checken ob der fifo voll ist
+            output->putItem(regA);
          break;
 
          case INSTR_MUL:
             regA *= data.data;
-            output->write(regA);
+            //TODO: checken ob der fifo voll ist
+            output->putItem(regA);
          break;
 
          case INSTR_SETA:

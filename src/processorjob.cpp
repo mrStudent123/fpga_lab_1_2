@@ -22,7 +22,7 @@ processor_job::~processor_job() {
 
 processor_instruction *processor_job::getInstructions(){
 
-   processor_instruction instructions[2];
+   processor_instruction *instructions = new processor_instruction[2];
    if(type == JOB_TYPE_ADD){
       instructions[0].instruction = INSTR_SETA;
       instructions[0].data = data1;
