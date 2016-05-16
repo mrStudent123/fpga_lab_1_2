@@ -157,7 +157,7 @@ void matrix::fillRandom(short max){
    }
 
    //printf("random fill:\n");
-   debug_print();
+   //debug_print();
 }
 
 bool matrix::equals(matrix m){

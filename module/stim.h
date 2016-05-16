@@ -102,7 +102,7 @@ public:
 
          if(data_in->hasItems()){
             a = data_in->getItem();
-            printf("stim: ");
+            printf("stim received result: ");
             printf("%hd, %hd,", a.get(0,0), a.get(1,0));
             printf(" %hd, %hd\n", a.get(0,1),a.get(1,1));
          }

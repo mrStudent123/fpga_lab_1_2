@@ -17,6 +17,7 @@ class if_fifo_matrix_out : virtual public sc_interface {
 public:
    virtual matrix getItem() = 0;
    virtual bool hasItems() = 0;
+   virtual unsigned num_available() = 0;
 };
 
 class channel_fifo_matrix: public sc_prim_channel,
@@ -75,6 +76,10 @@ public:
 
   virtual bool hasItems(){
      return count > 0;
+  }
+
+  virtual unsigned num_available(){
+     return count;
   }
 };
 

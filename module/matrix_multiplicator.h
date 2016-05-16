@@ -44,7 +44,8 @@ SC_MODULE(matrix_multiplicator){
          p->output(result_pipelines[i]);
       }
 
-      SC_THREAD(do_input);
+      SC_METHOD(do_input);
+           sensitive << clk.neg();
       SC_METHOD(do_output);
            sensitive << clk.neg();
 
@@ -89,53 +90,53 @@ SC_MODULE(matrix_multiplicator){
    }*/
 
    void do_input(){
-      printf("waiting for first input\n");
 
-      //while(true){
-         //if(input->hasItems())
-         if(true)
-         {
-            //matrix m1 = input->getItem();
-            //matrix m2 = input->getItem();
+      //printf("checking for idle core\n");
 
-            matrix m1;
-            matrix m2;
+      for(int i=0; i<number_cores; i++){
+         if(!instruction_pipelines[i].hasItems()){
 
-            m1.initializeRandom(2,2,5);
-            m2.initializeRandom(2,2,5);
+            bool found = false;
 
-            printf("new matrix input\n");
-
-            matrix_multiplication_job mjob(0, m1, m2);
-            currently_processed_matrices.push_back(mjob);
-
-            //while(mjob.hasJobs()){
-               processor_job pjob = mjob.getJob();
-
-               bool found_empty = false;
-
-               printf("now checking for idle core\n");
-
-               while(!found_empty){
-
-                  for(int i=0; i<number_cores; i++){
-                     if(!instruction_pipelines[i].hasItems()){
-                        found_empty = true;
-                        //pjob merken für result zuordnung
-                        processor_job_map[i] = pjob;
-
-                        processor_instruction *instr = pjob.getInstructions();
-                        printf("instruction %d, %d \n", instr[0].instruction, instr[0].data);
-                        printf("instruction %d, %d \n", instr[1].instruction, instr[1].data);
-                        instruction_pipelines[i].putItem(instr[0]);
-                        instruction_pipelines[i].putItem(instr[1]);
-                        break;
-                     }
-                  }
+            //matrizen durchgehn und schaun obs noch jobs gibt
+            for(MatrixList::iterator it = currently_processed_matrices.begin();
+               it != currently_processed_matrices.end();
+               it++)
+            {
+               if((*it).hasJobs()){
+                  found = true;
+                  process(*it, i);
+                  break;
                }
-            //}
+            }
+
+            // no jobs found from currently processed matrices
+            if(!found && (input->num_available() >= 2))
+            {
+               matrix m1 = input->getItem();
+               matrix m2 = input->getItem();
+
+               printf("new matrix input\n");
+
+               matrix_multiplication_job mjob(0, m1, m2);
+               currently_processed_matrices.push_back(mjob);
+               process(mjob, i);
+            }
          }
-      //}
+      }
+   }
+
+   void process(matrix_multiplication_job mjob, int i){
+      processor_job pjob = mjob.getJob();
+
+      //pjob merken für result zuordnung
+      processor_job_map[i] = pjob;
+
+      processor_instruction *instr = pjob.getInstructions();
+      printf("instruction %d, %d \n", instr[0].instruction, instr[0].data);
+      printf("instruction %d, %d \n", instr[1].instruction, instr[1].data);
+      instruction_pipelines[i].putItem(instr[0]);
+      instruction_pipelines[i].putItem(instr[1]);
    }
 
    void do_output(){
