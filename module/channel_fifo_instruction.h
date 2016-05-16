@@ -51,19 +51,21 @@ public:
 
   virtual processor_instruction getItem(){
      if(count > 0){
-        count --;
+       unsigned oldIndex = index;
+       unsigned newIndex = index;
 
-        unsigned oldIndex = index;
+       if(count == 1){
+          newIndex = 0;
+       }
+       else {
+          newIndex = (newIndex + 1) % INSTRUCTION_FIFO_SIZE;
+       }
 
-        if(count == 0){
-           index = 0;
-        }
-        else {
-           index = (index + 1) % INSTRUCTION_FIFO_SIZE;
-        }
-
-        return items[oldIndex];
-     }
+       processor_instruction value = items[oldIndex];
+       count --;
+       index = newIndex;
+       return value;
+    }
 
      processor_instruction i;
      return i;

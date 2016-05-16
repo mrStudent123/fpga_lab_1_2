@@ -52,18 +52,20 @@ public:
   virtual short getItem(){
      //printf("getItem: count, index: %hd, %hd\n", count, index);
      if(count > 0){
-        count --;
-
         unsigned oldIndex = index;
+        unsigned newIndex = index;
 
-        if(count == 0){
-           index = 0;
+        if(count == 1){
+           newIndex = 0;
         }
         else {
-           index = (index + 1) % SHORT_FIFO_SIZE;
+           newIndex = (newIndex + 1) % SHORT_FIFO_SIZE;
         }
 
-        return items[oldIndex];
+        short value = items[oldIndex];
+        count --;
+        index = newIndex;
+        return value;
      }
 
      return 0;

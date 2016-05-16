@@ -45,7 +45,7 @@ SC_MODULE(matrix_multiplicator){
       }
 
       SC_THREAD(do_input);
-      SC_THREAD(do_output);
+      //SC_THREAD(do_output);
       //SC_METHOD(debug_clk)
       //     sensitive << clk.pos();
 

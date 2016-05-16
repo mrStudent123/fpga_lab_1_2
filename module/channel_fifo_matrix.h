@@ -53,19 +53,21 @@ public:
   virtual matrix getItem(){
      //printf("getItem: count, index: %hd, %hd\n", count, index);
      if(count > 0){
-        count --;
+       unsigned oldIndex = index;
+       unsigned newIndex = index;
 
-        unsigned oldIndex = index;
+       if(count == 1){
+          newIndex = 0;
+       }
+       else {
+          newIndex = (newIndex + 1) % MATRIX_FIFO_SIZE;
+       }
 
-        if(count == 0){
-           index = 0;
-        }
-        else {
-           index = (index + 1) % MATRIX_FIFO_SIZE;
-        }
-
-        return items[oldIndex];
-     }
+       matrix value = items[oldIndex];
+       count --;
+       index = newIndex;
+       return value;
+    }
 
      matrix i;
      return i;
