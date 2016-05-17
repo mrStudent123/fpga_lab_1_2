@@ -41,7 +41,7 @@ matrix_multiplication_job::matrix_multiplication_job(unsigned id, matrix matrix1
             job.data1 = m2.get(result_x,i);
             job.type = JOB_TYPE_MUL;
             (*jobList).push_back(job);
-            job.debug_print();
+            //job.debug_print();
             //printf("Adding job to job list\n");
          }
       }
