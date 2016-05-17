@@ -99,7 +99,7 @@ void matrix::add(matrix m){
    }
 }
 
-void matrix::multiply(matrix m){
+matrix matrix::multiply(matrix m){
    matrix result;
    result.initialize(h, m.w);
 
@@ -108,14 +108,12 @@ void matrix::multiply(matrix m){
       for(int result_y=0; result_y < result.h; result_y++)
       {
          for(int i=0; i<w && i < m.h; i++){
-            result.data[result_y*result.w + result_x] += get(result_y,i) * m.get(i,result_x);
+            result.data[result_y*result.w + result_x] += get(i,result_y) * m.get(result_x,i);
          }
       }
    }
 
-   //for(int j=0; j<w && j < m.h; j++){
-   //   data[j] = result.data[j];
-   //}
+   return result;
 }
 
 void matrix::multiply_twoxtwo(matrix m){

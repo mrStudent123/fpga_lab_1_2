@@ -29,7 +29,7 @@ public:
    short get(unsigned short x, unsigned short y);
 
    void add(matrix m);
-   void multiply(matrix m);
+   matrix multiply(matrix m);
    void multiply_twoxtwo(matrix m);
    void fillRandom(short max);
 

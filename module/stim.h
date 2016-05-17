@@ -85,11 +85,13 @@ public:
             printf("stim received result: ");
             a.debug_print();
 
-            if(a.equals(input_array_multiplied[read_count])){
+            matrix compare = input_array[read_count*2].multiply(input_array[read_count*2+1]);
+            if(a.equals(compare)){
                printf("result is OK! :)\n\n");
             }
             else {
                printf("result is wrong, should be ");
+               compare.debug_print();
                input_array_multiplied[read_count].debug_print();
                printf("\n");
             }
