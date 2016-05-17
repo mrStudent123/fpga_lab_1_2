@@ -41,3 +41,16 @@ processor_instruction *processor_job::getInstructions(){
    return instructions;
 }
 
+void processor_job::debug_print(){
+   if(type == JOB_TYPE_ADD)
+   {
+      printf("pjob %d field %d: %hd + %hd\n", calculation_id, matrix_field, data1, data2);
+   }
+   else if(type == JOB_TYPE_MUL){
+      printf("pjob %d field %d: %hd * %hd\n", calculation_id, matrix_field, data1, data2);
+   }
+   else {
+      printf("pjob with invalid type\n");
+   }
+}
+

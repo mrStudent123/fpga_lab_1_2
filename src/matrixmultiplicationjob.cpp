@@ -41,6 +41,7 @@ matrix_multiplication_job::matrix_multiplication_job(unsigned id, matrix matrix1
             job.data2 = m2.get(i, result_x);
             job.type = JOB_TYPE_MUL;
             (*jobList).push_back(job);
+            job.debug_print();
             //printf("Adding job to job list\n");
          }
       }
@@ -111,6 +112,7 @@ bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
       result.data[pjob.matrix_field] = 0;
       (*jobList).push_back(addjob);
       printf("%d added new add job, size: %lu\n", _id, (*jobList).size());
+      addjob.debug_print();
    }
 
    return false;

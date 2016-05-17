@@ -26,6 +26,7 @@ public:
    virtual ~processor_job();
 
    processor_instruction *getInstructions();
+   void debug_print();
 };
 
 #endif /* PROCESSORJOB_H_ */
