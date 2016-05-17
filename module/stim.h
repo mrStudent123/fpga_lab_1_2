@@ -10,9 +10,9 @@
 #define OUTPUT_SIZE INPUT_SIZE/2
 
 #define MATRIX_SIZE_X_EVEN 4
-#define MATRIX_SIZE_Y_EVEN 10
+#define MATRIX_SIZE_Y_EVEN 2
 
-#define MATRIX_SIZE_X_ODD 4
+#define MATRIX_SIZE_X_ODD 2
 #define MATRIX_SIZE_Y_ODD 4
 
 #define RANDOM_FILL_MAX 10
@@ -39,7 +39,7 @@ public:
       }
 
       for(int i = 0; i < INPUT_SIZE; i++){
-         if(i%2 == 0){
+         if(i%2 != 0){
             input_array[i].initializeRandom(MATRIX_SIZE_X_EVEN,MATRIX_SIZE_Y_EVEN,RANDOM_FILL_MAX);
          }
          else {
