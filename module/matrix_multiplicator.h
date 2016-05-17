@@ -159,11 +159,11 @@ SC_MODULE(matrix_multiplicator){
          sprintf(string, "core%d", i);
          sc_trace(tf2, instruction_pipelines[i].count , string);
 
-         //sprintf(string, "core%d_data", i);
-         //sc_trace(tf2, instruction_pipelines[i].items[0].data , string);
+         sprintf(string, "core%d_data", i);
+         sc_trace(tf2, instruction_pipelines[i].temp.data , string);
 
-         //sprintf(string, "core%d_instr", i);
-         //sc_trace(tf2, instruction_pipelines[i].items[0].instruction , string);
+         sprintf(string, "core%d_instr", i);
+         sc_trace(tf2, instruction_pipelines[i].temp.instruction , string);
       }
    }
 

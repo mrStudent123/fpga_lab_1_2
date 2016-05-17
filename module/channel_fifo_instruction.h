@@ -28,6 +28,8 @@ public:
    unsigned short count;
    unsigned short index;
 
+   processor_instruction temp;   //for tracefile
+
    channel_fifo_instruction(){
       count = 0;
       index = 0;
@@ -63,6 +65,9 @@ public:
        processor_instruction value = items[oldIndex];
        count --;
        index = newIndex;
+
+       temp = value;    //for tracefile
+
        return value;
     }
 
