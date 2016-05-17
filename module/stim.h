@@ -49,30 +49,8 @@ public:
          input_array_multiplied[i].initialize_value(mul);
       }
 
-      // print: testvalues
-      /*
-      printf("---test values---\n");
-      for(int i = 0; i < number_testmatrix; i++){
-         printf("%d:",i);
-         printf("%hd, %hd,", input_array[i].get(0,0), input_array[i].get(1,0));
-         printf(" %hd, %hd\n", input_array[i].get(0,1),input_array[i].get(1,1));
-      }*/
-
-      // print: test values multiplied
-      /*
-      printf("---test values multiplied---\n");
-      for(int i = 0; i < number_outputmatrix; i++){
-         printf("%d:",i);
-         printf("%hd, %hd,", input_array_multiplied[i].get(0,0), input_array_multiplied[i].get(1,0));
-         printf(" %hd, %hd\n", input_array_multiplied[i].get(0,1),input_array_multiplied[i].get(1,1));
-      }*/
-
-
       SC_THREAD(write);
-
       SC_THREAD(read);
-
-      //SC_THREAD(compare);
    }
 
    void write(){
@@ -123,36 +101,11 @@ public:
       }
 
       printf("\nfinished all calculations\n");
+      cout << "time: "<< sc_time_stamp() << endl;
+
       abort();
    }
-
-   void compare(){
-      matrix a;
-
-      printf("stim thread compare\n");
-
-      while(1){
-
-         for(int j = 0; j < number_outputmatrix;){
-            if(data_in->hasItems()){
-               a.initialize_value(input_array[j*2]);
-               a.multiply(input_array[j*2+1]);
-               output_array[j] = data_in->getItem();
-               j++;
-
-               //assert( a.equals(output_array[j]));
-               //SC_REPORT_INFO("error ","error");
-            }
-            else{
-               wait(2, SC_US);
-            }
-
-         }
-      }
-   }
 };
-
-//cout << "Multiplication of:" << j*2 << " OK, time: "<< sc_time_stamp() << endl;
 
 #endif
 
