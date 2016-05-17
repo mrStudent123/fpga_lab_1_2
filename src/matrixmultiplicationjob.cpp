@@ -64,7 +64,7 @@ processor_job matrix_multiplication_job::getJob(){
    //printf("reading from job list, size %lu\n", (*jobList).size());
    processor_job job =  (*jobList).front();
    (*jobList).pop_front();
-   //printf("size after reading %lu\n", (*jobList).size());
+   printf("%d size after reading %lu\n", _id, (*jobList).size());
    return job;
 }
 
@@ -82,7 +82,7 @@ bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
          return true;
       }
       else {
-         printf("%d received add result, %d to go!", _id, MAX_NUM_RECEIVED_ADD_RESULTS-num_received_add_results);
+         printf("%d received add result, %d to go!\n", _id, MAX_NUM_RECEIVED_ADD_RESULTS-num_received_add_results);
       }
    }
    else {
@@ -105,6 +105,7 @@ bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
       addjob.matrix_field = pjob.matrix_field;
       addjob.data2 = value;
       addjob.data1 = result.data[pjob.matrix_field];
+      addjob.type = JOB_TYPE_ADD;
       result.data[pjob.matrix_field] = 0;
       (*jobList).push_back(addjob);
       printf("%d added new add job, size: %lu\n", _id, (*jobList).size());

@@ -6,7 +6,7 @@
 #include "../src/matrix.h"
 #include "channel_fifo_matrix.h"
 
-#define number_testmatrix 100
+#define number_testmatrix 4
 #define number_outputmatrix number_testmatrix/2
 
 
