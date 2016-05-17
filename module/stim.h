@@ -9,8 +9,12 @@
 #define INPUT_SIZE 4
 #define OUTPUT_SIZE INPUT_SIZE/2
 
-#define MATRIX_SIZE_X 4
-#define MATRIX_SIZE_Y 4
+#define MATRIX_SIZE_X_EVEN 4
+#define MATRIX_SIZE_Y_EVEN 10
+
+#define MATRIX_SIZE_X_ODD 4
+#define MATRIX_SIZE_Y_ODD 4
+
 #define RANDOM_FILL_MAX 10
 
 
@@ -29,8 +33,18 @@ public:
    SC_CTOR(stim) {
       read_count = 0;
 
+      if(MATRIX_SIZE_X_EVEN != MATRIX_SIZE_Y_ODD){
+         printf("matrix sizes not applicable for multiplication, exiting\n");
+         abort();
+      }
+
       for(int i = 0; i < INPUT_SIZE; i++){
-         input_array[i].initializeRandom(MATRIX_SIZE_X,MATRIX_SIZE_Y,RANDOM_FILL_MAX);
+         if(i%2 == 0){
+            input_array[i].initializeRandom(MATRIX_SIZE_X_EVEN,MATRIX_SIZE_Y_EVEN,RANDOM_FILL_MAX);
+         }
+         else {
+            input_array[i].initializeRandom(MATRIX_SIZE_X_ODD,MATRIX_SIZE_Y_ODD,RANDOM_FILL_MAX);
+         }
       }
 
       SC_THREAD(write);
@@ -61,7 +75,7 @@ public:
 
          if(data_in->hasItems()){
             matrix a = data_in->getItem();
-            printf("stim received result: ");
+            printf("stim received result:\n");
             a.debug_print();
 
             matrix compare = input_array[read_count*2].multiply(input_array[read_count*2+1]);
@@ -70,7 +84,7 @@ public:
                printf("result is OK! :)\n\n");
             }
             else {
-               printf("result is wrong, should be ");
+               printf("result is wrong, should be\n");
                compare.debug_print();
                printf("\n");
             }

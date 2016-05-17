@@ -149,7 +149,10 @@ bool matrix::equals(matrix m){
 void matrix::debug_print(){
    //printf("matrix data pointer %p\n", data);
    for(int i=0; i< w*h; i++){
-      printf("%2hd ", data[i]);
+      printf("%4hd ", data[i]);
+      if((i+1)%w == 0){
+         printf("\n");
+      }
    }
    printf("\n");
 }
