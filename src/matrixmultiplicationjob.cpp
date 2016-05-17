@@ -70,31 +70,34 @@ processor_job matrix_multiplication_job::getJob(){
 
 bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
 
-   printf("received mmult job result\n");
-
    if(pjob.type == JOB_TYPE_ADD){
+      printf("%d received add job result\n", _id);
       num_received_add_results++;
 
       if(num_received_add_results >= MAX_NUM_RECEIVED_ADD_RESULTS ||
             (value == 0 && num_received_add_results >= (MAX_NUM_RECEIVED_ADD_RESULTS -1))){
          result.data[pjob.matrix_field] = value;
 
-         printf("finished mmult job!\n");
+         printf("%d finished mmult job!\n", _id);
          return true;
       }
       else {
-         printf("received add result, %d to go!", MAX_NUM_RECEIVED_ADD_RESULTS-num_received_add_results);
+         printf("%d received add result, %d to go!", _id, MAX_NUM_RECEIVED_ADD_RESULTS-num_received_add_results);
       }
+   }
+   else {
+      printf("%d received mmult job result\n", _id);
    }
 
    if(value == 0){
+      printf("%d result is 0\n", _id);
       return false;
    }
 
    // for both mul and add jobs
    if(result.data[pjob.matrix_field] == 0){
       result.data[pjob.matrix_field] = value;
-      printf("result field is 0\n");
+      printf("%d last result was 0\n", _id);
    }
    else {
       processor_job addjob;
