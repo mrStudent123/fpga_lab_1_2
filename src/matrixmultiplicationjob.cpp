@@ -83,9 +83,9 @@ bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
          printf("%d finished mmult job!\n", _id);
          return true;
       }
-      else {
-         printf("%d received add result, %d to go!\n", _id, MAX_NUM_RECEIVED_ADD_RESULTS-num_received_add_results);
-      }
+      //else {
+      //   printf("%d received add result, %d to go!\n", _id, MAX_NUM_RECEIVED_ADD_RESULTS-num_received_add_results);
+      //}
    }
    //else {
    //   printf("%d received mmult job result\n", _id);
@@ -111,7 +111,7 @@ bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
       addjob.type = JOB_TYPE_ADD;
       result.data[pjob.matrix_field] = 0;
       (*jobList).push_back(addjob);
-      printf("%d added new add job, size: %lu\n", _id, (*jobList).size());
+      //printf("%d added new add job, size: %lu\n", _id, (*jobList).size());
       //addjob.debug_print();
    }
 
