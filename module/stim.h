@@ -6,9 +6,12 @@
 #include "../src/matrix.h"
 #include "channel_fifo_matrix.h"
 
-#define number_testmatrix 4
-#define number_outputmatrix number_testmatrix/2
+#define INPUT_SIZE 4
+#define OUTPUT_SIZE INPUT_SIZE/2
 
+#define MATRIX_SIZE_X 4
+#define MATRIX_SIZE_Y 4
+#define RANDOM_FILL_MAX 10
 
 
 SC_MODULE(stim) {
@@ -17,8 +20,7 @@ public:
    sc_port< if_fifo_matrix_in > data_out;
    sc_port< if_fifo_matrix_out > data_in;
 
-   matrix input_array[number_testmatrix];
-   matrix output_array[number_outputmatrix];
+   matrix input_array[INPUT_SIZE];
 
 private:
    unsigned short read_count;
@@ -27,13 +29,8 @@ public:
    SC_CTOR(stim) {
       read_count = 0;
 
-      for(int i = 0; i < number_testmatrix; i++){
-         input_array[i].initialize(2,2);
-         input_array[i].initializeRandom_twoxtwo(10);
-      }
-
-      for(int i = 0; i < number_outputmatrix; i++){
-         output_array[i].initialize(2,2);
+      for(int i = 0; i < INPUT_SIZE; i++){
+         input_array[i].initializeRandom(MATRIX_SIZE_X,MATRIX_SIZE_Y,RANDOM_FILL_MAX);
       }
 
       SC_THREAD(write);
@@ -46,7 +43,7 @@ public:
 
       int i = 0;
 
-      while(i < number_testmatrix){
+      while(i < INPUT_SIZE){
          if(data_out->num_free()){
             data_out->putItem(input_array[i]);
             //printf("stim writing matrix %d\n", i);
@@ -60,7 +57,7 @@ public:
    }
 
    void read(){
-      while(read_count < (number_outputmatrix)){
+      while(read_count < (OUTPUT_SIZE)){
 
          if(data_in->hasItems()){
             matrix a = data_in->getItem();

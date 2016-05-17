@@ -23,7 +23,7 @@ void matrix::initialize(unsigned short width, unsigned short height) {
    w = width;
    h = height;
 
-   data = new short[width*height];
+   data = new short[w*h];
 
    for(int i=0; i<w*h; i++){
       data[i] = 0;
@@ -31,24 +31,10 @@ void matrix::initialize(unsigned short width, unsigned short height) {
 }
 
 void matrix::initialize_value(matrix m) {
+   w = m.w;
+   h = m.h;
 
-   if(w != m.w || h != m.h){
-      printf("w,h: %hd %hd %hd %hd\n", w, h, m.w, m.h);
-      printf("error in matrix::initialize_value\n");
-      abort();
-   }
-
-   for(int i=0; i<w*h; i++){
-      data[i] = m.data[i];
-   }
-}
-
-void matrix::initialize_value_twoxtwo(matrix m) {
-
-   if(w != 2 || h != 2 || m.w != 2 || m.h != 2){
-      printf("error in matrix::initialize_value_twoxtwo\n");
-      abort();
-   }
+   data = new short[w*h];
 
    for(int i=0; i<w*h; i++){
       data[i] = m.data[i];
@@ -62,18 +48,6 @@ void matrix::initializeRandom(unsigned short width, unsigned short height, short
    data = new short[width*height];
 
    fillRandom(max);
-
-}
-
-void matrix::initializeRandom_twoxtwo(short max){
-
-   if(w != 2 || h != 2){
-      printf("error in matrix::initializeRandom_twoxtwo\n");
-      abort();
-   }
-
-   fillRandom(max);
-
 }
 
 short matrix::get(unsigned short x, unsigned short y){
