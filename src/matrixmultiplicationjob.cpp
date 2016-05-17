@@ -104,7 +104,7 @@ bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
       addjob.data1 = result.data[pjob.matrix_field];
       result.data[pjob.matrix_field] = 0;
       (*jobList).push_back(addjob);
-      printf("added new add job, size: %lu\n", (*jobList).size());
+      printf("%d added new add job, size: %lu\n", _id, (*jobList).size());
    }
 
    return false;

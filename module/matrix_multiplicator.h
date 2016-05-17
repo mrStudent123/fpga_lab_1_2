@@ -13,6 +13,8 @@ SC_MODULE(matrix_multiplicator){
    sc_port < if_fifo_matrix_in > output;
    sc_in <bool> clk;
 
+   unsigned short number_of_calculations;
+
    typedef std::list<matrix_multiplication_job> MatrixList;
    MatrixList *currently_processed_matrices;
 
@@ -25,6 +27,7 @@ SC_MODULE(matrix_multiplicator){
    SC_CTOR(matrix_multiplicator){
 
       printf("mmult constructor\n");
+      number_of_calculations = 0;
 
       number_cores = 10;
 
@@ -86,7 +89,7 @@ SC_MODULE(matrix_multiplicator){
 
                printf("new matrix input, size: %lu\n", (*currently_processed_matrices).size());
 
-               matrix_multiplication_job mjob(0, m1, m2);
+               matrix_multiplication_job mjob(number_of_calculations++, m1, m2);
                (*currently_processed_matrices).push_back(mjob);
                process(mjob, i);
             }
@@ -114,6 +117,7 @@ SC_MODULE(matrix_multiplicator){
       for(int i=0; i<number_cores; i++){
          if(result_pipelines[i].hasItems()){
             //printf("results available in %d\n", i);
+
             for(MatrixList::iterator it = (*currently_processed_matrices).begin();
                   it != (*currently_processed_matrices).end();
                   it++)
