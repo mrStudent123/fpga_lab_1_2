@@ -30,7 +30,6 @@ public:
    unsigned short index;
 
    channel_fifo_matrix(){
-      printf("matrix channel constructor\n");
       count = 0;
       index = 0;
    }
