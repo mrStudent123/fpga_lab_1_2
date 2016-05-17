@@ -155,14 +155,15 @@ SC_MODULE(matrix_multiplicator){
 
       for(int i = 0; i < NUMBER_CORE; i++){
 
+
          sprintf(string, "core%d", i);
          sc_trace(tf2, instruction_pipelines[i].count , string);
 
-         sprintf(string, "core%d_data", i);
-         sc_trace(tf2, instruction_pipelines[i].items->data , string);
+         //sprintf(string, "core%d_data", i);
+         //sc_trace(tf2, instruction_pipelines[i].items[0].data , string);
 
-         sprintf(string, "core%d_instr", i);
-         sc_trace(tf2, instruction_pipelines[i].items->instruction , string);
+         //sprintf(string, "core%d_instr", i);
+         //sc_trace(tf2, instruction_pipelines[i].items[0].instruction , string);
       }
    }
 
