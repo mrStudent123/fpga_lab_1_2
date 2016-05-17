@@ -19,19 +19,13 @@ public:
 
    matrix input_array[number_testmatrix];
    matrix output_array[number_outputmatrix];
-   matrix input_array_multiplied[number_outputmatrix];
 
 private:
    unsigned short read_count;
 
 public:
    SC_CTOR(stim) {
-      //printf("stim constructor\n");
-
       read_count = 0;
-
-      matrix mul;
-      mul.initialize(2,2);
 
       for(int i = 0; i < number_testmatrix; i++){
          input_array[i].initialize(2,2);
@@ -40,13 +34,6 @@ public:
 
       for(int i = 0; i < number_outputmatrix; i++){
          output_array[i].initialize(2,2);
-         input_array_multiplied[i].initialize(2,2);
-      }
-
-      for(int i = 0; i < number_outputmatrix; i++){
-         mul.initialize_value_twoxtwo(input_array[i*2]);
-         mul.multiply_twoxtwo(input_array[i*2+1]);
-         input_array_multiplied[i].initialize_value(mul);
       }
 
       SC_THREAD(write);
@@ -54,8 +41,6 @@ public:
    }
 
    void write(){
-
-      //printf("stim thread write\n");
 
       wait(2,SC_NS);
 
@@ -75,26 +60,24 @@ public:
    }
 
    void read(){
-      matrix a;
-      a.initialize(2,2);
-
       while(read_count < (number_outputmatrix)){
 
          if(data_in->hasItems()){
-            a = data_in->getItem();
+            matrix a = data_in->getItem();
             printf("stim received result: ");
             a.debug_print();
 
             matrix compare = input_array[read_count*2].multiply(input_array[read_count*2+1]);
+
             if(a.equals(compare)){
                printf("result is OK! :)\n\n");
             }
             else {
                printf("result is wrong, should be ");
                compare.debug_print();
-               input_array_multiplied[read_count].debug_print();
                printf("\n");
             }
+
             read_count++;
          }
          else{
