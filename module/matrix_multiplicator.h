@@ -7,7 +7,7 @@
 #include "channel_fifo_instruction.h"
 #include "../src/matrixmultiplicationjob.h"
 
-#define NUMBER_CORE 10
+#define NUMBER_CORE 5
 
 SC_MODULE(matrix_multiplicator){
 
@@ -38,11 +38,6 @@ SC_MODULE(matrix_multiplicator){
       instruction_pipelines = new channel_fifo_instruction[number_cores];;
       result_pipelines = new channel_fifo_short[number_cores];
 
-      sc_trace_file *tf2;                          // Signal tracing
-      tf2=sc_create_vcd_trace_file("matrix_multiplicator");  // create new trace file
-      tf2->set_time_unit(0.01,SC_NS);              // set time resolution
-      //sc_trace(tf2, input.size() , name);
-
       for(int i=0; i<number_cores; i++){
          printf("initializing core %d \n", i);
          char name[5];
@@ -51,8 +46,10 @@ SC_MODULE(matrix_multiplicator){
          p->clk(clk);
          p->input(instruction_pipelines[i]);
          p->output(result_pipelines[i]);
-         sc_trace(tf2, instruction_pipelines[i].count , name);
+
       }
+
+      trace_multiplicator();
 
       SC_METHOD(do_input);
            sensitive << clk.neg();
@@ -147,7 +144,31 @@ SC_MODULE(matrix_multiplicator){
          }
       }
    }
+
+   void trace_multiplicator(){
+
+      char string[15];
+
+      sc_trace_file *tf2;                                    // Signal tracing
+      tf2=sc_create_vcd_trace_file("matrix_multiplicator");  // create new trace file
+      tf2->set_time_unit(0.01,SC_NS);                        // set time resolution
+
+      for(int i = 0; i < NUMBER_CORE; i++){
+
+         sprintf(string, "core%d", i);
+         sc_trace(tf2, instruction_pipelines[i].count , string);
+
+         sprintf(string, "core%d_data", i);
+         sc_trace(tf2, instruction_pipelines[i].items->data , string);
+
+         sprintf(string, "core%d_instr", i);
+         sc_trace(tf2, instruction_pipelines[i].items->instruction , string);
+      }
+   }
+
 };
+
+
 
 /*
    void test_stim(){
