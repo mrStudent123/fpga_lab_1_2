@@ -86,11 +86,12 @@ public:
             a.debug_print();
 
             if(a.equals(input_array_multiplied[read_count])){
-               printf("result is OK! :)\n");
+               printf("result is OK! :)\n\n");
             }
             else {
                printf("result is wrong, should be ");
                input_array_multiplied[read_count].debug_print();
+               printf("\n");
             }
             read_count++;
          }

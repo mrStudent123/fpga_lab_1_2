@@ -38,7 +38,7 @@ SC_MODULE(matrix_multiplicator){
 
 
       for(int i=0; i<number_cores; i++){
-         printf("generating core%d \n", i);
+         printf("initializing core %d \n", i);
          char name[5];
          sprintf(name, "core%d", i);
          processor* p = new processor(name);
@@ -86,7 +86,7 @@ SC_MODULE(matrix_multiplicator){
                matrix m1 = input->getItem();
                matrix m2 = input->getItem();
 
-               printf("new matrix input, size: %lu\n", (*currently_processed_matrices).size());
+               printf("new matrix input, currently processing %lu matrices\n", (*currently_processed_matrices).size()+1);
 
                matrix_multiplication_job mjob(number_of_calculations++, m1, m2);
                (*currently_processed_matrices).push_back(mjob);

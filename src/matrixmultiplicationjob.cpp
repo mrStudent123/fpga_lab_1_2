@@ -21,6 +21,7 @@ matrix_multiplication_job::matrix_multiplication_job(unsigned id, matrix matrix1
    printf("new matrix job\n");
    m1.debug_print();
    m2.debug_print();
+   printf("\n");
 
    result.initialize(m1.h, m2.w);
    num_received_add_results = 0;
