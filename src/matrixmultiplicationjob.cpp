@@ -80,7 +80,7 @@ bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
             (value == 0 && num_received_add_results >= (MAX_NUM_RECEIVED_ADD_RESULTS -1))){
          result.data[pjob.matrix_field] = value;
 
-         printf("%d finished mmult job!\n", _id);
+         //printf("%d finished mmult job!\n", _id);
          return true;
       }
       //else {

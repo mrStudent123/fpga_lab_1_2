@@ -75,7 +75,7 @@ public:
 
          if(data_in->hasItems()){
             matrix a = data_in->getItem();
-            printf("stim received result:\n");
+            printf("stim received result %d of %d:\n", read_count+1, OUTPUT_SIZE);
             a.debug_print();
 
             matrix compare = input_array[read_count*2].multiply(input_array[read_count*2+1]);

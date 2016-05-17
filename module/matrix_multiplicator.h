@@ -124,7 +124,7 @@ SC_MODULE(matrix_multiplicator){
                if((*it)._id == processor_job_map[i].calculation_id){
                   if((*it).putJobResult(processor_job_map[i], result_pipelines[i].getItem())){
                      //fertige matrix rausschreiben
-                     printf("finished calculation\n\n");
+                     //printf("finished calculation\n\n");
                      output->putItem((*it).getResult());
                      (*currently_processed_matrices).erase(it);
                   }
