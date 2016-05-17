@@ -7,6 +7,8 @@
 #include "channel_fifo_instruction.h"
 #include "../src/matrixmultiplicationjob.h"
 
+#define NUMBER_CORE 10
+
 SC_MODULE(matrix_multiplicator){
 
    sc_port < if_fifo_matrix_out > input;
@@ -28,7 +30,7 @@ SC_MODULE(matrix_multiplicator){
 
       number_of_calculations = 0;
 
-      number_cores = 10;
+      number_cores = NUMBER_CORE;
 
       currently_processed_matrices = new MatrixList;
       processor_job_map = new processor_job[number_cores];
@@ -36,6 +38,10 @@ SC_MODULE(matrix_multiplicator){
       instruction_pipelines = new channel_fifo_instruction[number_cores];;
       result_pipelines = new channel_fifo_short[number_cores];
 
+      sc_trace_file *tf2;                          // Signal tracing
+      tf2=sc_create_vcd_trace_file("matrix_multiplicator");  // create new trace file
+      tf2->set_time_unit(0.01,SC_NS);              // set time resolution
+      //sc_trace(tf2, input.size() , name);
 
       for(int i=0; i<number_cores; i++){
          printf("initializing core %d \n", i);
@@ -45,12 +51,16 @@ SC_MODULE(matrix_multiplicator){
          p->clk(clk);
          p->input(instruction_pipelines[i]);
          p->output(result_pipelines[i]);
+         sc_trace(tf2, instruction_pipelines[i].count , name);
       }
 
       SC_METHOD(do_input);
            sensitive << clk.neg();
       SC_METHOD(do_output);
            sensitive << clk.neg();
+
+
+      //sc_close_vcd_trace_file(tf);   // close trace file
 
       //SC_THREAD(test_stim);
    }

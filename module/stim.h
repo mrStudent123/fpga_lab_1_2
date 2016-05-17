@@ -6,7 +6,7 @@
 #include "../src/matrix.h"
 #include "channel_fifo_matrix.h"
 
-#define INPUT_SIZE 4
+#define INPUT_SIZE 100
 #define OUTPUT_SIZE INPUT_SIZE/2
 
 #define MATRIX_SIZE_X_EVEN 4
@@ -16,6 +16,9 @@
 #define MATRIX_SIZE_Y_ODD 4
 
 #define RANDOM_FILL_MAX 10
+
+#define WAIT_AFTER_CHANNEL_OUT_FULL 500
+#define WAIT_AFTER_CHANNEL_IN_FULL 2
 
 
 SC_MODULE(stim) {
@@ -65,7 +68,7 @@ public:
          }
          else{
             //printf("stim waiting, fifo full");
-            wait(20,SC_NS);
+            wait(WAIT_AFTER_CHANNEL_OUT_FULL,SC_NS);
          }
       }
    }
@@ -92,7 +95,7 @@ public:
             read_count++;
          }
          else{
-            wait(200,SC_NS);
+            wait(WAIT_AFTER_CHANNEL_IN_FULL,SC_NS);
          }
 
       }
@@ -100,7 +103,7 @@ public:
       printf("\nfinished all calculations\n");
       cout << "time: "<< sc_time_stamp() << endl;
 
-      abort();
+      //abort();
    }
 };
 

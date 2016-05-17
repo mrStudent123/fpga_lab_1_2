@@ -43,16 +43,17 @@ int sc_main(int argc, char* argv[]){
    multiplicator.input(inputFifo);
    multiplicator.output(outputFifo);
 
-   //sc_trace_file *tf;          // Signal tracing
-   //tf=sc_create_vcd_trace_file("multicore");  // create new trace file
-   //tf->set_time_unit(1,SC_NS);        // set time resolution to 0.5 �-sec
-   //sc_trace(tf, amplitude_c, "Amplitude_c");
+   sc_trace_file *tf;          // Signal tracing
+   tf=sc_create_vcd_trace_file("main");  // create new trace file
+   tf->set_time_unit(0.01,SC_NS);        // set time resolution to 0.5 �-sec
+   sc_trace(tf, inputFifo.count , "channel_stim_output");
+   sc_trace(tf, outputFifo.count , "channel_stim_input");
 
 
    printf("\nstart program\n\n");
-   sc_start(1, SC_SEC);
+   sc_start(1, SC_MS);
 
-   //sc_close_vcd_trace_file(tf);   // close trace file
+   sc_close_vcd_trace_file(tf);   // close trace file
 
    return 0;
 }
