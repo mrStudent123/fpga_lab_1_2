@@ -27,6 +27,8 @@ public:
    unsigned short count;
    unsigned short index;
 
+   short temp_trace;    //for tracefile
+
    channel_fifo_short(){
       count = 0;
       index = 0;
@@ -64,6 +66,9 @@ public:
         short value = items[oldIndex];
         count --;
         index = newIndex;
+
+        temp_trace = value;
+
         return value;
      }
 

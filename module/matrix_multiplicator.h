@@ -6,6 +6,7 @@
 #include "channel_fifo_matrix.h"
 #include "channel_fifo_instruction.h"
 #include "../src/matrixmultiplicationjob.h"
+#include "stim.h"
 
 #define NUMBER_CORE 5
 
@@ -25,6 +26,7 @@ SC_MODULE(matrix_multiplicator){
 
    channel_fifo_instruction *instruction_pipelines;
    channel_fifo_short *result_pipelines;
+
 
    SC_CTOR(matrix_multiplicator){
 
@@ -48,6 +50,7 @@ SC_MODULE(matrix_multiplicator){
          p->output(result_pipelines[i]);
 
       }
+
 
       trace_multiplicator();
 
@@ -155,7 +158,6 @@ SC_MODULE(matrix_multiplicator){
 
       for(int i = 0; i < NUMBER_CORE; i++){
 
-
          sprintf(string, "core%d", i);
          sc_trace(tf2, instruction_pipelines[i].count , string);
 
@@ -164,7 +166,11 @@ SC_MODULE(matrix_multiplicator){
 
          sprintf(string, "core%d_instr", i);
          sc_trace(tf2, instruction_pipelines[i].temp.instruction , string);
+
+         sprintf(string, "core%d_result", i);
+         sc_trace(tf2, result_pipelines[i].temp_trace , string);
       }
+
    }
 
 };
