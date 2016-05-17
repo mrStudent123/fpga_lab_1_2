@@ -22,11 +22,13 @@ public:
    matrix input_array_multiplied[number_outputmatrix];
 
 private:
-
+   unsigned short read_count;
 
 public:
    SC_CTOR(stim) {
-      printf("stim constructor\n");
+      //printf("stim constructor\n");
+
+      read_count = 0;
 
       matrix mul;
       mul.initialize(2,2);
@@ -98,19 +100,30 @@ public:
       matrix a;
       a.initialize(2,2);
 
-      while(1){
+      while(read_count < (number_outputmatrix)){
 
          if(data_in->hasItems()){
             a = data_in->getItem();
             printf("stim received result: ");
-            printf("%hd, %hd,", a.get(0,0), a.get(1,0));
-            printf(" %hd, %hd\n", a.get(0,1),a.get(1,1));
+            a.debug_print();
+
+            if(a.equals(input_array_multiplied[read_count])){
+               printf("result is OK! :)\n");
+            }
+            else {
+               printf("result is wrong, should be ");
+               input_array_multiplied[read_count].debug_print();
+            }
+            read_count++;
          }
          else{
             wait(200,SC_NS);
          }
 
       }
+
+      printf("\nfinished all calculations\n");
+      abort();
    }
 
    void compare(){

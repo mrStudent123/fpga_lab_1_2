@@ -64,7 +64,7 @@ processor_job matrix_multiplication_job::getJob(){
    //printf("reading from job list, size %lu\n", (*jobList).size());
    processor_job job =  (*jobList).front();
    (*jobList).pop_front();
-   printf("%d size after reading %lu\n", _id, (*jobList).size());
+   //printf("%d size after reading %lu\n", _id, (*jobList).size());
    return job;
 }
 
