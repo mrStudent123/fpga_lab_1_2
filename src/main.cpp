@@ -49,7 +49,7 @@ int sc_main(int argc, char* argv[]){
    //sc_trace(tf, amplitude_c, "Amplitude_c");
 
 
-   printf("start program\n");
+   printf("\nstart program\n\n");
    sc_start(1, SC_SEC);
 
    //sc_close_vcd_trace_file(tf);   // close trace file

@@ -55,7 +55,7 @@ public:
 
    void write(){
 
-      printf("stim thread write\n");
+      //printf("stim thread write\n");
 
       wait(2,SC_NS);
 
@@ -64,7 +64,7 @@ public:
       while(i < number_testmatrix){
          if(data_out->num_free()){
             data_out->putItem(input_array[i]);
-            printf("stim writing matrix %d\n", i);
+            //printf("stim writing matrix %d\n", i);
             i++;
          }
          else{
