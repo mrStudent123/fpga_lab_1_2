@@ -37,8 +37,8 @@ matrix_multiplication_job::matrix_multiplication_job(unsigned id, matrix matrix1
             processor_job job;
             job.calculation_id = _id;
             job.matrix_field = result_y * result.w + result_x;
-            job.data1 = m1.get(result_y,i);
-            job.data2 = m2.get(i, result_x);
+            job.data2 = m1.get(i, result_y);
+            job.data1 = m2.get(result_x,i);
             job.type = JOB_TYPE_MUL;
             (*jobList).push_back(job);
             job.debug_print();
