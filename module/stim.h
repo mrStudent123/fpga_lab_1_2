@@ -20,6 +20,7 @@
 #define WAIT_AFTER_CHANNEL_OUT_FULL 500
 #define WAIT_AFTER_CHANNEL_IN_FULL 2
 
+sc_trace_file *tf;          // Signal tracing
 
 SC_MODULE(stim) {
 

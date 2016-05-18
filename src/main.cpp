@@ -20,6 +20,11 @@ int sc_main(int argc, char* argv[]){
 
    sc_clock clk ("clk", 1, SC_NS);   // a clock with a period of 2 µ-sec
 
+   tf=sc_create_vcd_trace_file("main");  // create new trace file
+   tf->set_time_unit(0.01,SC_NS);        // set time resolution to 0.5 �-sec
+   sc_trace(tf, inputFifo.count , "channel_stim_output");
+   sc_trace(tf, outputFifo.count , "channel_stim_input");
+
    /* MATRIX CHANNEL TEST
    channel_fifo_matrix testchannel;
    stim_channel_matrix_test stim_test("testinger");
@@ -42,12 +47,6 @@ int sc_main(int argc, char* argv[]){
    multiplicator.clk(clk);
    multiplicator.input(inputFifo);
    multiplicator.output(outputFifo);
-
-   sc_trace_file *tf;          // Signal tracing
-   tf=sc_create_vcd_trace_file("main");  // create new trace file
-   tf->set_time_unit(0.01,SC_NS);        // set time resolution to 0.5 �-sec
-   sc_trace(tf, inputFifo.count , "channel_stim_output");
-   sc_trace(tf, outputFifo.count , "channel_stim_input");
 
 
    printf("\nstart program\n\n");

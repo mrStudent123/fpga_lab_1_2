@@ -152,23 +152,19 @@ SC_MODULE(matrix_multiplicator){
 
       char string[15];
 
-      sc_trace_file *tf2;                                    // Signal tracing
-      tf2=sc_create_vcd_trace_file("matrix_multiplicator");  // create new trace file
-      tf2->set_time_unit(0.01,SC_NS);                        // set time resolution
-
       for(int i = 0; i < NUMBER_CORE; i++){
 
          sprintf(string, "core%d", i);
-         sc_trace(tf2, instruction_pipelines[i].count , string);
+         sc_trace(tf, instruction_pipelines[i].count , string);
 
          sprintf(string, "core%d_data", i);
-         sc_trace(tf2, instruction_pipelines[i].temp.data , string);
+         sc_trace(tf, instruction_pipelines[i].temp.data , string);
 
          sprintf(string, "core%d_instr", i);
-         sc_trace(tf2, instruction_pipelines[i].temp.instruction , string);
+         sc_trace(tf, instruction_pipelines[i].temp.instruction , string);
 
          sprintf(string, "core%d_result", i);
-         sc_trace(tf2, result_pipelines[i].temp_trace , string);
+         sc_trace(tf, result_pipelines[i].temp_trace , string);
       }
 
    }
