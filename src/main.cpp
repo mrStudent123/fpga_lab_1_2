@@ -13,6 +13,8 @@
 
 #include "stim_matrix_channel_test.h"
 
+void write_file();
+
 
 int sc_main(int argc, char* argv[]){
 
@@ -70,5 +72,32 @@ int sc_main(int argc, char* argv[]){
 
    sc_close_vcd_trace_file(tf);   // close trace file
 
+   write_file();
+
    return 0;
+}
+
+void write_file(){
+   FILE * logfile;
+
+   logfile = fopen ("logfile.txt", "a");
+   fprintf(logfile, "core_number: %d   number_matrix: %d   %dx%d with %dx%d   input_wait: %d   output_wait: %d",
+         NUMBER_CORE,
+         INPUT_SIZE,
+         MATRIX_SIZE_Y_EVEN,
+         MATRIX_SIZE_X_EVEN,
+         MATRIX_SIZE_Y_ODD,
+         MATRIX_SIZE_X_ODD,
+         WAIT_AFTER_CHANNEL_OUT_FULL,
+         WAIT_AFTER_CHANNEL_IN_FULL);
+
+   const std::string log_string[20] = sc_time_stamp().to_string();
+   // :(
+   //strcpy(log_string, sc_time_stamp().to_string());
+   //double a = sc_time_stamp().to_seconds();
+   //fprintf(logfile, "time_stamp: %s\n",log_string);
+   //printf("%s\n", log_string);
+
+   fclose(logfile);
+
 }
