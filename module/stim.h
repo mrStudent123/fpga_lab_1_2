@@ -17,7 +17,7 @@
 
 #define RANDOM_FILL_MAX 10
 
-#define WAIT_AFTER_CHANNEL_OUT_FULL 500
+#define WAIT_AFTER_CHANNEL_OUT_FULL 2
 #define WAIT_AFTER_CHANNEL_IN_FULL 2
 
 sc_trace_file *tf;          // Signal tracing
@@ -103,6 +103,10 @@ public:
 
       printf("\nfinished all calculations\n");
       cout << "time: "<< sc_time_stamp() << endl;
+
+      //char trace_time_stamp[15];
+      //sprintf(trace_time_stamp,"time %p", sc_time_stamp());
+      //tf->write_comment(trace_time_stamp);
 
       //abort();
    }

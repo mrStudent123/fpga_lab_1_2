@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "systemc.h"
+#include "string.h"
 
 #include "processor_instruction.h"
 #include "processor.h"
@@ -20,7 +21,22 @@ int sc_main(int argc, char* argv[]){
 
    sc_clock clk ("clk", 1, SC_NS);   // a clock with a period of 2 µ-sec
 
+   char trace_comment[200];
+   sprintf(trace_comment, "\n core number: %d\n number matrix %d\n multiplication of %dx%d with %dx%d\n input wait %d\n output wait %d\n",
+         NUMBER_CORE,
+         INPUT_SIZE,
+         MATRIX_SIZE_Y_EVEN,
+         MATRIX_SIZE_X_EVEN,
+         MATRIX_SIZE_Y_ODD,
+         MATRIX_SIZE_X_ODD,
+         WAIT_AFTER_CHANNEL_OUT_FULL,
+         WAIT_AFTER_CHANNEL_IN_FULL);
+
+
    tf=sc_create_vcd_trace_file("main");  // create new trace file
+   tf->write_comment(trace_comment);
+
+
    tf->set_time_unit(0.01,SC_NS);        // set time resolution to 0.5 �-sec
    sc_trace(tf, inputFifo.count , "channel_stim_output");
    sc_trace(tf, outputFifo.count , "channel_stim_input");
