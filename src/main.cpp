@@ -81,7 +81,7 @@ void write_file(){
    FILE * logfile;
 
    logfile = fopen ("logfile.txt", "a");
-   fprintf(logfile, "core_number: %d   number_matrix: %d   %dx%d with %dx%d   input_wait: %d   output_wait: %d",
+   fprintf(logfile, "core_number: %d   number_matrix: %d   %dx%d with %dx%d   input_wait: %d   output_wait: %d\n",
          NUMBER_CORE,
          INPUT_SIZE,
          MATRIX_SIZE_Y_EVEN,
