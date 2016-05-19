@@ -113,7 +113,7 @@ public:
       printf("number values: %hd\n", INPUT_SIZE);
       printf("%hdx%hd %hdx%hd\n", MATRIX_SIZE_Y_EVEN, MATRIX_SIZE_X_EVEN, MATRIX_SIZE_Y_ODD,MATRIX_SIZE_X_ODD);
       printf("number result true: %hd\n", count_result_true);
-      printf("number result true: %hd\n", count_result_false);
+      printf("number result false: %hd\n", count_result_false);
       cout << "time: "<< sc_time_stamp() << endl;
 
       strcpy(global_time_stamp, sc_time_stamp().to_string().c_str());
