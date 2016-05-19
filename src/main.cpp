@@ -39,7 +39,7 @@ int sc_main(int argc, char* argv[]){
    tf->write_comment(trace_comment);
 
 
-   tf->set_time_unit(0.01,SC_NS);        // set time resolution to 0.5 �-sec
+   tf->set_time_unit(0.1,SC_NS);        // set time resolution to 0.5 �-sec
    sc_trace(tf, inputFifo.count , "channel_stim_output");
    sc_trace(tf, outputFifo.count , "channel_stim_input");
 
@@ -68,11 +68,13 @@ int sc_main(int argc, char* argv[]){
 
 
    printf("\nstart program\n\n");
-   sc_start(1, SC_MS);
+   sc_start(5, SC_MS);
 
    sc_close_vcd_trace_file(tf);   // close trace file
 
    write_file();
+
+   cout << "write in file: done" << endl;
 
    return 0;
 }

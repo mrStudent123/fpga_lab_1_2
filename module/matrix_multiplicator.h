@@ -8,7 +8,7 @@
 #include "../src/matrixmultiplicationjob.h"
 #include "stim.h"
 
-#define NUMBER_CORE 5
+#define NUMBER_CORE 1
 
 SC_MODULE(matrix_multiplicator){
 
@@ -27,12 +27,15 @@ SC_MODULE(matrix_multiplicator){
    channel_fifo_instruction *instruction_pipelines;
    channel_fifo_short *result_pipelines;
 
+   long matrix_counter;
 
    SC_CTOR(matrix_multiplicator){
 
       number_of_calculations = 0;
 
       number_cores = NUMBER_CORE;
+
+      matrix_counter = 0;
 
       currently_processed_matrices = new MatrixList;
       processor_job_map = new processor_job[number_cores];
@@ -96,11 +99,13 @@ SC_MODULE(matrix_multiplicator){
                matrix m1 = input->getItem();
                matrix m2 = input->getItem();
 
-               printf("new matrix input, currently processing %lu matrices\n", (*currently_processed_matrices).size()+1);
+               printf("new matrix input %ld %ld, currently processing %lu matrices in list\n",matrix_counter, matrix_counter + 1, (*currently_processed_matrices).size()+1);
 
                matrix_multiplication_job mjob(number_of_calculations++, m1, m2);
                (*currently_processed_matrices).push_back(mjob);
                process(mjob, i);
+
+               matrix_counter = matrix_counter + 2;
             }
          }
       }

@@ -12,6 +12,7 @@
 #include "processorjob.h"
 #include <list>
 
+
 class matrix_multiplication_job {
 private:
    matrix result;

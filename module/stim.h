@@ -6,14 +6,14 @@
 #include "../src/matrix.h"
 #include "channel_fifo_matrix.h"
 
-#define INPUT_SIZE 100
+#define INPUT_SIZE 10
 #define OUTPUT_SIZE INPUT_SIZE/2
 
-#define MATRIX_SIZE_X_EVEN 4
-#define MATRIX_SIZE_Y_EVEN 2
+#define MATRIX_SIZE_X_EVEN 3
+#define MATRIX_SIZE_Y_EVEN 3
 
-#define MATRIX_SIZE_X_ODD 2
-#define MATRIX_SIZE_Y_ODD 4
+#define MATRIX_SIZE_X_ODD 3
+#define MATRIX_SIZE_Y_ODD 3
 
 #define RANDOM_FILL_MAX 10
 
@@ -22,7 +22,7 @@
 
 sc_trace_file *tf;          // Signal tracing
 
-char global_time_stamp[20];
+char global_time_stamp[35];
 
 SC_MODULE(stim) {
 
