@@ -22,6 +22,8 @@
 
 sc_trace_file *tf;          // Signal tracing
 
+char global_time_stamp[20];
+
 SC_MODULE(stim) {
 
 public:
@@ -104,9 +106,7 @@ public:
       printf("\nfinished all calculations\n");
       cout << "time: "<< sc_time_stamp() << endl;
 
-      //char trace_time_stamp[15];
-      //sprintf(trace_time_stamp,"time %p", sc_time_stamp());
-      //tf->write_comment(trace_time_stamp);
+      strcpy(global_time_stamp, sc_time_stamp().to_string().c_str());
 
       //abort();
    }

@@ -81,7 +81,7 @@ void write_file(){
    FILE * logfile;
 
    logfile = fopen ("logfile.txt", "a");
-   fprintf(logfile, "core_number: %d   number_matrix: %d   %dx%d with %dx%d   input_wait: %d   output_wait: %d\n",
+   fprintf(logfile, "core_number: %d   number_matrix: %d   %dx%d with %dx%d   input_wait: %d   output_wait: %d   time_stamp: %s\n",
          NUMBER_CORE,
          INPUT_SIZE,
          MATRIX_SIZE_Y_EVEN,
@@ -89,14 +89,9 @@ void write_file(){
          MATRIX_SIZE_Y_ODD,
          MATRIX_SIZE_X_ODD,
          WAIT_AFTER_CHANNEL_OUT_FULL,
-         WAIT_AFTER_CHANNEL_IN_FULL);
+         WAIT_AFTER_CHANNEL_IN_FULL,
+         global_time_stamp);
 
-   const std::string log_string[20] = sc_time_stamp().to_string();
-   // :(
-   //strcpy(log_string, sc_time_stamp().to_string());
-   //double a = sc_time_stamp().to_seconds();
-   //fprintf(logfile, "time_stamp: %s\n",log_string);
-   //printf("%s\n", log_string);
 
    fclose(logfile);
 
