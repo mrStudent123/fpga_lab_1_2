@@ -34,10 +34,14 @@ public:
 
 private:
    unsigned short read_count;
+   unsigned short count_result_true;
+   unsigned short count_result_false;
 
 public:
    SC_CTOR(stim) {
       read_count = 0;
+      count_result_true = 0;
+      count_result_false = 0;
 
       if(MATRIX_SIZE_X_EVEN != MATRIX_SIZE_Y_ODD){
          printf("matrix sizes not applicable for multiplication, exiting\n");
@@ -88,11 +92,13 @@ public:
 
             if(a.equals(compare)){
                printf("result is OK! :)\n\n");
+               count_result_true++;
             }
             else {
                printf("result is wrong, should be\n");
                compare.debug_print();
                printf("\n");
+               count_result_false++;
             }
 
             read_count++;
@@ -104,6 +110,10 @@ public:
       }
 
       printf("\nfinished all calculations\n");
+      printf("number values: %hd\n", INPUT_SIZE);
+      printf("%hdx%hd %hdx%hd\n", MATRIX_SIZE_Y_EVEN, MATRIX_SIZE_X_EVEN, MATRIX_SIZE_Y_ODD,MATRIX_SIZE_X_ODD);
+      printf("number result true: %hd\n", count_result_true);
+      printf("number result true: %hd\n", count_result_false);
       cout << "time: "<< sc_time_stamp() << endl;
 
       strcpy(global_time_stamp, sc_time_stamp().to_string().c_str());

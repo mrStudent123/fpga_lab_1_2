@@ -27,7 +27,7 @@ SC_MODULE(matrix_multiplicator){
    channel_fifo_instruction *instruction_pipelines;
    channel_fifo_short *result_pipelines;
 
-   long matrix_counter;
+   short matrix_counter;
 
    SC_CTOR(matrix_multiplicator){
 
@@ -99,7 +99,7 @@ SC_MODULE(matrix_multiplicator){
                matrix m1 = input->getItem();
                matrix m2 = input->getItem();
 
-               printf("new matrix input %ld %ld, currently processing %lu matrices in list\n",matrix_counter, matrix_counter + 1, (*currently_processed_matrices).size()+1);
+               printf("new matrix input %hd %hd, currently processing %lu matrices in list\n",matrix_counter, matrix_counter + 1, (*currently_processed_matrices).size()+1);
 
                matrix_multiplication_job mjob(number_of_calculations++, m1, m2);
                (*currently_processed_matrices).push_back(mjob);
