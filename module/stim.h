@@ -6,14 +6,14 @@
 #include "../src/matrix.h"
 #include "channel_fifo_matrix.h"
 
-#define INPUT_SIZE 10
+#define INPUT_SIZE 200
 #define OUTPUT_SIZE INPUT_SIZE/2
 
-#define MATRIX_SIZE_X_EVEN 3
-#define MATRIX_SIZE_Y_EVEN 3
+#define MATRIX_SIZE_X_EVEN 2
+#define MATRIX_SIZE_Y_EVEN 2
 
-#define MATRIX_SIZE_X_ODD 3
-#define MATRIX_SIZE_Y_ODD 3
+#define MATRIX_SIZE_X_ODD 2
+#define MATRIX_SIZE_Y_ODD 2
 
 #define RANDOM_FILL_MAX 10
 
