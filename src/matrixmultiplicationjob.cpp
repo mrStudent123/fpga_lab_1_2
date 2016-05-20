@@ -85,7 +85,7 @@ processor_job matrix_multiplication_job::getJob(){
 bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
 
    if(pjob.type == JOB_TYPE_ADD){
-      printf("%d received add job result %d\n", _id, value);
+      //printf("%d received add job result %d\n", _id, value);
       num_received_add_results++;
 
       if(isFinished())
@@ -99,7 +99,7 @@ bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
       //}
    }
    else {
-      printf("%d received mmult job result %d\n", _id, value);
+      //printf("%d received mmult job result %d\n", _id, value);
       num_received_mul_results++;
    }
 
