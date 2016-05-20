@@ -27,7 +27,7 @@ matrix_multiplication_job::matrix_multiplication_job(unsigned id, matrix matrix1
    num_received_add_results = 0;
    num_received_mul_results = 0;
    MAX_NUM_RECEIVED_ADD_RESULTS = 0;//result.w*result.h*(m1.w-1);
-   MAX_NUM_RECEIVED_MUL_RESULTS = result.w*result.h*(m1.w);
+   MAX_NUM_RECEIVED_MUL_RESULTS = 0; //result.w*result.h*(m1.w);
 
    //printf("initial job list size %lu\n", (*jobList).size());
 
@@ -36,15 +36,17 @@ matrix_multiplication_job::matrix_multiplication_job(unsigned id, matrix matrix1
       for(int result_y=0; result_y < result.h; result_y++)
       {
          for(int i=0; i<m1.w && i < m2.h; i++){
-            /*if(m1.get(i, result_y) == 0){
-               result.put(result_y, result_x, m2.get(result_x,i));
-               num_received_mul_results++;
+            /*if(m1.get(i, result_y) == 0 && m2.get(result_x,i) == 0){
+               continue;
+            }
+            else if(m1.get(i, result_y) == 0){
+               addToField(result_y * result.w + result_x, m2.get(result_x,i));
             }
             else if(m2.get(result_x,i) == 0) {
-               result.put(result_y, result_x, m1.get(i, result_y));
-               num_received_mul_results++;
+               addToField(result_y * result.w + result_x, m1.get(i, result_y));
             }
             else {*/
+               MAX_NUM_RECEIVED_MUL_RESULTS++;
                processor_job job;
                job.calculation_id = _id;
                job.matrix_field = result_y * result.w + result_x;
@@ -108,26 +110,30 @@ bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
       return isFinished();
    }
 
+   addToField(pjob.matrix_field, value);
+
+   return false;
+}
+
+void matrix_multiplication_job::addToField(unsigned field, short value){
    // for both mul and add jobs
-   if(result.data[pjob.matrix_field] == 0){
-      result.data[pjob.matrix_field] = value;
+   if(result.data[field] == 0){
+      result.data[field] = value;
       //printf("%d last result was 0\n", _id);
    }
    else {
       MAX_NUM_RECEIVED_ADD_RESULTS++;
       processor_job addjob;
       addjob.calculation_id = _id;
-      addjob.matrix_field = pjob.matrix_field;
+      addjob.matrix_field = field;
       addjob.data2 = value;
-      addjob.data1 = result.data[pjob.matrix_field];
+      addjob.data1 = result.data[field];
       addjob.type = JOB_TYPE_ADD;
-      result.data[pjob.matrix_field] = 0;
+      result.data[field] = 0;
       (*jobList).push_back(addjob);
       //printf("%d added new add job, size: %lu\n", _id, (*jobList).size());
       //addjob.debug_print();
    }
-
-   return false;
 }
 
 bool matrix_multiplication_job::isFinished(){

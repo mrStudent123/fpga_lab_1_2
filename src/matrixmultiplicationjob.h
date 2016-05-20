@@ -25,6 +25,7 @@ private:
    unsigned num_received_mul_results;
    unsigned MAX_NUM_RECEIVED_MUL_RESULTS;
    bool isFinished();
+   void addToField(unsigned field, short value);
 public:
    unsigned _id;
    matrix m1;
