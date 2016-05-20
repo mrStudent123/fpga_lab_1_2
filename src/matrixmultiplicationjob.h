@@ -22,6 +22,9 @@ private:
 
    unsigned num_received_add_results;
    unsigned MAX_NUM_RECEIVED_ADD_RESULTS;
+   unsigned num_received_mul_results;
+   unsigned MAX_NUM_RECEIVED_MUL_RESULTS;
+   bool isFinished();
 public:
    unsigned _id;
    matrix m1;
