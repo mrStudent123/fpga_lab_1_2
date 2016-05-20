@@ -76,11 +76,13 @@ bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
       //printf("%d received add job result\n", _id);
       num_received_add_results++;
 
-      if(num_received_add_results >= MAX_NUM_RECEIVED_ADD_RESULTS ||
-            (value == 0 && num_received_add_results >= (MAX_NUM_RECEIVED_ADD_RESULTS -1))){
+      if(num_received_add_results >= MAX_NUM_RECEIVED_ADD_RESULTS)
+      {
          result.data[pjob.matrix_field] = value;
-
          //printf("%d finished mmult job!\n", _id);
+         return true;
+      }
+      else if((value == 0 && num_received_add_results >= (MAX_NUM_RECEIVED_ADD_RESULTS -1))){
          return true;
       }
       //else {

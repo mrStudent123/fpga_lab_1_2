@@ -44,13 +44,17 @@ SC_MODULE(processor) {
          case INSTR_ADD:
             regA += data.data;
             //TODO: checken ob der fifo voll ist
-            output->putItem(regA);
+            if(!output->putItem(regA)){
+               printf("Processor output fifo full, LOST RESULT!\n");
+            }
          break;
 
          case INSTR_MUL:
             regA *= data.data;
             //TODO: checken ob der fifo voll ist
-            output->putItem(regA);
+            if(!output->putItem(regA)){
+               printf("Processor output fifo full, LOST RESULT!\n");
+            }
          break;
 
          case INSTR_SETA:
