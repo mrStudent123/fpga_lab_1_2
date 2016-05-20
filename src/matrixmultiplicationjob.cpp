@@ -82,9 +82,6 @@ bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
          //printf("%d finished mmult job!\n", _id);
          return true;
       }
-      else if((value == 0 && num_received_add_results >= (MAX_NUM_RECEIVED_ADD_RESULTS -1))){
-         return true;
-      }
       //else {
       //   printf("%d received add result, %d to go!\n", _id, MAX_NUM_RECEIVED_ADD_RESULTS-num_received_add_results);
       //}
@@ -96,7 +93,7 @@ bool matrix_multiplication_job::putJobResult(processor_job pjob, short value) {
    if(value == 0){
       //printf("%d result is 0\n", _id);
       num_received_add_results++;
-      return false;
+      return num_received_add_results >= MAX_NUM_RECEIVED_ADD_RESULTS;
    }
 
    // for both mul and add jobs
