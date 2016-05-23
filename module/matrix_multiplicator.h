@@ -8,7 +8,7 @@
 #include "../src/matrixmultiplicationjob.h"
 #include "stim.h"
 
-#define NUMBER_CORE 1
+#define NUMBER_CORES 10
 
 SC_MODULE(matrix_multiplicator){
 
@@ -33,7 +33,7 @@ SC_MODULE(matrix_multiplicator){
 
       number_of_calculations = 0;
 
-      number_cores = NUMBER_CORE;
+      number_cores = NUMBER_CORES;
 
       matrix_counter = 0;
 
@@ -62,10 +62,6 @@ SC_MODULE(matrix_multiplicator){
       SC_METHOD(do_output);
            sensitive << clk.neg();
 
-
-      //sc_close_vcd_trace_file(tf);   // close trace file
-
-      //SC_THREAD(test_stim);
    }
 
 
@@ -157,7 +153,7 @@ SC_MODULE(matrix_multiplicator){
 
       char string[15];
 
-      for(int i = 0; i < NUMBER_CORE; i++){
+      for(int i = 0; i < NUMBER_CORES; i++){
 
          sprintf(string, "core%d", i);
          sc_trace(tf, instruction_pipelines[i].count , string);
@@ -175,42 +171,5 @@ SC_MODULE(matrix_multiplicator){
    }
 
 };
-
-
-
-/*
-   void test_stim(){
-      matrix m1;
-      m1.initialize(2,2);
-      bool h = true;
-
-      wait(200,SC_NS);
-
-      while(1){
-         if(input->hasItems()){
-            m1 = input->getItem();
-            printf("multi: ");
-            printf("%hd, %hd,", m1.get(0,0), m1.get(1,0));
-            printf(" %hd, %hd\n", m1.get(0,1),m1.get(1,1));
-
-            //output->putItem(m1);
-
-            while(h){
-               if(output->num_free()){
-                  output->putItem(m1);
-                  h = false;
-               }
-               else{
-                  wait(20,SC_NS);
-               }
-            }
-            h = true;
-
-         }
-         else{
-            wait(200,SC_NS);
-         }
-      }
-   }*/
 
 #endif

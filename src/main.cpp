@@ -25,7 +25,7 @@ int sc_main(int argc, char* argv[]){
 
    char trace_comment[200];
    sprintf(trace_comment, "\n core number: %d\n number matrix %d\n multiplication of %dx%d with %dx%d\n input wait %d\n output wait %d\n",
-         NUMBER_CORE,
+         NUMBER_CORES,
          INPUT_SIZE,
          MATRIX_SIZE_Y_EVEN,
          MATRIX_SIZE_X_EVEN,
@@ -84,7 +84,7 @@ void write_file(){
 
    logfile = fopen ("logfile.txt", "a");
    fprintf(logfile, "core_number: %d   number_matrix: %d   %dx%d with %dx%d   input_wait: %d   output_wait: %d   time_stamp: %s\n",
-         NUMBER_CORE,
+         NUMBER_CORES,
          INPUT_SIZE,
          MATRIX_SIZE_Y_EVEN,
          MATRIX_SIZE_X_EVEN,

@@ -9,11 +9,11 @@
 #define INPUT_SIZE 20
 #define OUTPUT_SIZE INPUT_SIZE/2
 
-#define MATRIX_SIZE_X_EVEN 30
-#define MATRIX_SIZE_Y_EVEN 20
+#define MATRIX_SIZE_X_EVEN 3
+#define MATRIX_SIZE_Y_EVEN 2
 
-#define MATRIX_SIZE_X_ODD 20
-#define MATRIX_SIZE_Y_ODD 30
+#define MATRIX_SIZE_X_ODD 2
+#define MATRIX_SIZE_Y_ODD 3
 
 #define RANDOM_FILL_MAX 10
 
@@ -117,8 +117,6 @@ public:
       cout << "time: "<< sc_time_stamp() << endl;
 
       strcpy(global_time_stamp, sc_time_stamp().to_string().c_str());
-
-      //abort();
    }
 };
 

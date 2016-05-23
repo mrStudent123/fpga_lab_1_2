@@ -90,39 +90,6 @@ matrix matrix::multiply(matrix m){
    return result;
 }
 
-void matrix::multiply_twoxtwo(matrix m){
-   matrix temp;
-   temp.initialize(2,2);
-
-   matrix result;
-   result.initialize(2, 2);
-
-   if(w != 2 || h != 2){
-      printf("error in multiply_twoxtwo\n");
-      abort();
-   }
-
-   temp.data[0] = data[0];
-   temp.data[1] = data[1];
-   temp.data[2] = data[2];
-   temp.data[3] = data[3];
-
-   result.data[0] = temp.data[0]*m.data[0] + temp.data[1]*m.data[2];
-   result.data[1] = temp.data[0]*m.data[1] + temp.data[1]*m.data[3];
-   result.data[2] = temp.data[2]*m.data[0] + temp.data[3]*m.data[2];
-   result.data[3] = temp.data[2]*m.data[1] + temp.data[3]*m.data[3];
-
-   //printf("a: %hd, %hd, %hd, %hd \n", temp.data[0], temp.data[1], temp.data[2], temp.data[3]);
-   //printf("b: %hd, %hd, %hd, %hd \n", m.data[0], m.data[1], m.data[2], m.data[3]);
-   //printf("axb: %hd, %hd, %hd, %hd \n", result.data[0], result.data[1], result.data[2], result.data[3]);
-
-   data[0] = result.data[0];
-   data[1] = result.data[1];
-   data[2] = result.data[2];
-   data[3] = result.data[3];
-
-}
-
 void matrix::fillRandom(short max){
    for(short i=0; i<w*h; i++){
       data[i] = (short)((rand() % (max*2)) - max);
