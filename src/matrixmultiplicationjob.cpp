@@ -23,7 +23,7 @@ matrix_multiplication_job::matrix_multiplication_job(unsigned id, matrix matrix1
    m2.debug_print();
    printf("\n");
 
-   result.initialize(m1.h, m2.w);
+   result.initialize(m2.w, m1.h);
    num_received_add_results = 0;
    num_received_mul_results = 0;
    MAX_NUM_RECEIVED_ADD_RESULTS = 0;//result.w*result.h*(m1.w-1);

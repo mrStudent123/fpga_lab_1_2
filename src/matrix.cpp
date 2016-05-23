@@ -75,7 +75,7 @@ void matrix::add(matrix m){
 
 matrix matrix::multiply(matrix m){
    matrix result;
-   result.initialize(h, m.w);
+   result.initialize(m.w, h);
 
    for(int result_x=0; result_x < result.w; result_x++)
    {
